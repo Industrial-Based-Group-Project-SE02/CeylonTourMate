@@ -2,42 +2,46 @@ import { useState, useEffect } from 'react';
 
 function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState('6Lw2SdcT0To');
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const destinations = [
     {
-      image: 'https://images.unsplash.com/photo-1593693399741-6c36df2a7f0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      image: 'sigiriya.jpg',
       title: 'Sigiriya Rock Fortress',
       description: 'Ancient rock fortress with stunning frescoes and panoramic views',
-      price: '$85',
       tags: ['Cultural', 'Historical']
     },
     {
-      image: 'https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      image: 'ella.jpg',
       title: 'Ella & Tea Country',
       description: 'Mountain views, waterfalls, and scenic train rides through tea plantations',
-      price: '$65',
       tags: ['Nature', 'Adventure']
     },
     {
-      image: 'https://images.unsplash.com/photo-1552465011-b4e30bf7349d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      image: 'galle.jpg',
       title: 'Galle Fort',
       description: 'Dutch colonial architecture, boutique shops, and sunset views',
-      price: '$75',
       tags: ['Coastal', 'Historical']
     },
     {
-      image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      image: 'yala.jpg',
       title: 'Yala National Park',
       description: 'Spot leopards, elephants, and exotic birds in Sri Lanka\'s premier wildlife sanctuary',
-      price: '$95',
       tags: ['Wildlife', 'Safari']
     },
     {
-      image: 'https://images.unsplash.com/photo-1552465011-b4e30bf7349d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      image: 'mirissa.jpg',
       title: 'Mirissa Beach',
       description: 'Golden sands, palm trees, and the best whale watching in Sri Lanka',
-      price: '$55',
       tags: ['Beach', 'Whale Watching']
+    },
+    {
+      image: 'hikkaduwa.jpg',
+      title: 'Hikkaduwa Corals',
+      description: 'Famous for surfing, coral reefs, and vibrant nightlife on the southern coast',
+      tags: ['Beach', 'Surfing']
     }
   ];
 
@@ -68,36 +72,181 @@ function Home() {
     }
   ];
 
-  const videos = [
+  // Updated packages with tiered structure
+  const packages = [
     {
-      image: 'https://images.unsplash.com/photo-1552465011-b4e30bf7349d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
-      title: 'Cultural Heritage',
-      subtitle: 'Ancient cities and temples',
-      duration: '4:32',
-      views: '24K'
+      name: 'Gold Package',
+      tier: 'gold',
+      duration: '7-14 Days',
+      priceRange: '$1,599 - $2,499',
+      price: '$1,599',
+      image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      rating: 5.0,
+      reviews: 312,
+      featured: true,
+      tagline: 'Premium Experience',
+      gradient: 'from-yellow-400 via-yellow-500 to-orange-500',
+      highlights: [
+        '5-Star Luxury Hotels & Resorts',
+        'Premium Vehicle Transport',
+        'Gourmet Meals (All Included)',
+        'English-Speaking Tour Guide',
+        'All Activities & Entrance Fees',
+        '24/7 Concierge Service',
+        'Airport VIP Lounge Access',
+        'Complimentary Spa Treatment'
+      ],
+      includes: ['Luxury Hotels', 'All Meals', 'Premium Transport', 'Expert Guide', 'All Activities', 'Concierge']
     },
     {
-      image: 'https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
-      title: 'Tea Country',
-      subtitle: 'Scenic train journeys',
-      duration: '3:15',
-      views: '18K'
+      name: 'Silver Package',
+      tier: 'silver',
+      duration: '5-10 Days',
+      priceRange: '$999 - $1,599',
+      price: '$999',
+      image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      rating: 4.8,
+      reviews: 234,
+      featured: false,
+      tagline: 'Comfort Experience',
+      gradient: 'from-gray-300 via-gray-400 to-gray-500',
+      highlights: [
+        '4-Star Quality Hotels',
+        'Comfort Vehicle Transport',
+        'Breakfast & Dinner Included',
+        'English-Speaking Driver',
+        'Selected Activities Included',
+        'Daily Support Service',
+        'Airport Transfers',
+        'Travel Insurance'
+      ],
+      includes: ['4-Star Hotels', 'Breakfast & Dinner', 'Comfort Transport', 'Driver', 'Selected Activities']
     },
     {
-      image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
-      title: 'Wildlife Safari',
-      subtitle: 'National parks & elephants',
-      duration: '5:20',
-      views: '32K'
+      name: 'Bronze Package',
+      tier: 'bronze',
+      duration: '3-7 Days',
+      priceRange: '$599 - $999',
+      price: '$599',
+      image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      rating: 4.7,
+      reviews: 189,
+      featured: false,
+      tagline: 'Essential Experience',
+      gradient: 'from-orange-600 via-orange-700 to-orange-800',
+      highlights: [
+        '3-Star Standard Hotels',
+        'Standard Vehicle Transport',
+        'Breakfast Included',
+        'Airport Transfers',
+        'Basic Activities Included',
+        'Email Support',
+        'Travel Guide Book',
+        'Local SIM Card'
+      ],
+      includes: ['3-Star Hotels', 'Breakfast', 'Standard Transport', 'Airport Transfer', 'Basic Activities']
     },
     {
-      image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
-      title: 'Tropical Beaches',
-      subtitle: 'Coastal paradise',
-      duration: '4:05',
-      views: '28K'
+      name: 'Custom Package',
+      tier: 'custom',
+      duration: 'Flexible',
+      priceRange: 'Contact Us',
+      price: 'Custom',
+      image: 'https://images.unsplash.com/photo-1566552881560-0be862a7c445?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      rating: 4.9,
+      reviews: 156,
+      featured: false,
+      tagline: 'Build Your Own',
+      gradient: 'from-purple-500 via-pink-500 to-red-500',
+      highlights: [
+        'Fully Customizable Itinerary',
+        'Choose Your Accommodation Level',
+        'Select Your Activities',
+        'Flexible Duration',
+        'Mix & Match Services',
+        'Personal Trip Planner',
+        'Budget-Friendly Options',
+        'Upgrade Anytime'
+      ],
+      includes: ['Your Choice', 'Flexible Options', 'Personalized', 'Custom Duration']
     }
   ];
+
+  // Fetch real YouTube videos about Sri Lanka
+  useEffect(() => {
+    const fetchYouTubeVideos = async () => {
+      try {
+        setLoading(true);
+        const API_KEY = 'AIzaSyD5fTfsMnJ7Gz5d-UcnqzDq3JOD0Th9Z4M'; // Replace with your YouTube API key
+        const searchQuery = 'Sri Lanka travel 4K';
+        const response = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&type=video&maxResults=8&key=${API_KEY}`
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch videos');
+        }
+        
+        const data = await response.json();
+        
+        const videoDetails = data.items.map(item => ({
+          videoId: item.id.videoId,
+          title: item.snippet.title,
+          subtitle: item.snippet.channelTitle,
+          image: item.snippet.thumbnails.medium.url,
+          duration: '5:00',
+          views: 'N/A'
+        }));
+        
+        setVideos(videoDetails);
+        if (videoDetails.length > 0) {
+          setSelectedVideo(videoDetails[0].videoId);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching YouTube videos:', error);
+        // Fallback to default videos if API fails
+        setVideos([
+          {
+            image: 'https://images.unsplash.com/photo-1552465011-b4e30bf7349d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+            title: 'Cultural Heritage',
+            subtitle: 'Ancient cities and temples',
+            videoId: '6Lw2SdcT0To',
+            duration: '4:32',
+            views: '24K'
+          },
+          {
+            image: 'https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+            title: 'Tea Country',
+            subtitle: 'Scenic train journeys',
+            videoId: 'TYkQrjcrSzQ',
+            duration: '3:15',
+            views: '18K'
+          },
+          {
+            image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+            title: 'Wildlife Safari',
+            subtitle: 'National parks & elephants',
+            videoId: 'T_mhxIr9fZE',
+            duration: '5:20',
+            views: '32K'
+          },
+          {
+            image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+            title: 'Tropical Beaches',
+            subtitle: 'Coastal paradise',
+            videoId: '5biJsewGHZY',
+            duration: '4:05',
+            views: '28K'
+          }
+        ]);
+        setSelectedVideo('6Lw2SdcT0To');
+        setLoading(false);
+      }
+    };
+
+    fetchYouTubeVideos();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -112,15 +261,8 @@ function Home() {
       <section className="overflow-hidden relative h-screen">
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="object-cover w-full h-full"
-          >
+          <video autoPlay muted loop playsInline className="object-cover w-full h-full">
             <source src="/vedio1.mp4" type="video/mp4" />
-            {/* Fallback image */}
             <img
               src="https://images.unsplash.com/photo-1591273531346-bd946dab7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
               alt="Sri Lanka Beach"
@@ -183,7 +325,7 @@ function Home() {
               <div
                 key={index}
                 className="relative h-[500px] rounded-3xl overflow-hidden cursor-pointer group"
-                onClick={() => alert(`Selected: ${dest.title}\nFrom ${dest.price}`)}
+                onClick={() => alert(`Selected: ${dest.title}`)}
               >
                 <img src={dest.image} alt={dest.title} className="object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90"></div>
@@ -198,10 +340,6 @@ function Home() {
                   <h3 className="mb-2 text-3xl font-bold">{dest.title}</h3>
                   <p className="mb-4 text-gray-200">{dest.description}</p>
                   <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-2xl font-bold text-orange-300">From {dest.price}</div>
-                      <div className="text-sm text-gray-300">per person</div>
-                    </div>
                     <button className="px-6 py-3 font-bold text-gray-900 bg-white rounded-full transition hover:bg-gray-100">
                       Explore <i className="ml-2 fas fa-arrow-right"></i>
                     </button>
@@ -214,7 +352,7 @@ function Home() {
       </section>
 
       {/* Video Experience Section */}
-      <section className="relative py-20 bg-black">
+      <section id='experiences' className="relative py-20 bg-black">
         <div className="absolute inset-0 bg-fixed bg-center bg-cover" style={{backgroundImage: "url('https://images.unsplash.com/photo-1523480717984-24cba35ae1eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"}}></div>
         <div className="absolute inset-0 bg-black/70"></div>
         
@@ -232,41 +370,48 @@ function Home() {
             <div className="lg:col-span-2">
               <div className="overflow-hidden relative rounded-3xl shadow-2xl">
                 <iframe
-                  src="https://www.youtube.com/embed/6Lw2SdcT0To?controls=0&showinfo=0&rel=0&modestbranding=1"
+                  src={`https://www.youtube.com/embed/${selectedVideo}?controls=1&showinfo=0&rel=0&modestbranding=1`}
                   className="w-full h-[400px] md:h-[500px]"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
-                <div className="absolute top-6 right-6">
-                  <span className="px-4 py-2 text-sm font-bold text-white bg-red-500 rounded-full">
-                    <i className="mr-2 fas fa-play"></i> LIVE
-                  </span>
-                </div>
               </div>
             </div>
 
             <div className="space-y-6">
               <h3 className="mb-6 text-2xl font-bold text-white">Featured Videos</h3>
-              {videos.map((video, index) => (
-                <div key={index} className="p-4 rounded-2xl backdrop-blur-sm transition cursor-pointer bg-gray-900/50 hover:bg-gray-800/70 group">
-                  <div className="flex items-center">
-                    <div className="overflow-hidden relative flex-shrink-0 w-32 h-20 rounded-xl">
-                      <img src={video.image} alt={video.title} className="object-cover w-full h-full" />
-                      <div className="flex absolute inset-0 justify-center items-center bg-black/40">
-                        <i className="text-xl text-white fas fa-play"></i>
+              {loading ? (
+                <div className="flex justify-center items-center h-64">
+                  <div className="w-12 h-12 rounded-full border-4 border-orange-500 animate-spin border-t-transparent"></div>
+                </div>
+              ) : (
+                videos.slice(0, 4).map((video, index) => (
+                  <div 
+                    key={index} 
+                    onClick={() => setSelectedVideo(video.videoId)}
+                    className={`p-4 rounded-2xl backdrop-blur-sm transition cursor-pointer ${
+                      selectedVideo === video.videoId ? 'bg-orange-500/30 ring-2 ring-orange-400' : 'bg-gray-900/50 hover:bg-gray-800/70'
+                    } group`}
+                  >
+                    <div className="flex items-center">
+                      <div className="overflow-hidden relative flex-shrink-0 w-32 h-20 rounded-xl">
+                        <img src={video.image} alt={video.title} className="object-cover w-full h-full" />
+                        <div className="flex absolute inset-0 justify-center items-center bg-black/40">
+                          <i className="text-xl text-white fas fa-play"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="mb-1 font-bold text-white group-hover:text-orange-300">{video.title}</h4>
-                      <p className="text-sm text-gray-400">{video.subtitle}</p>
-                      <div className="flex items-center mt-2 text-xs text-gray-500">
-                        <i className="mr-1 fas fa-clock"></i> {video.duration}
-                        <i className="mr-1 ml-3 fas fa-eye"></i> {video.views} views
+                      <div className="ml-4">
+                        <h4 className="mb-1 font-bold text-white line-clamp-2 group-hover:text-orange-300">{video.title}</h4>
+                        <p className="text-sm text-gray-400 line-clamp-1">{video.subtitle}</p>
+                        <div className="flex items-center mt-2 text-xs text-gray-500">
+                          <i className="mr-1 fas fa-clock"></i> {video.duration}
+                          <i className="mr-1 ml-3 fas fa-eye"></i> {video.views} views
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
 
@@ -277,38 +422,148 @@ function Home() {
           </div>
         </div>
       </section>
-
-      {/* Experiences Grid */}
-      <section className="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
+      
+      {/* Tour Packages Section - UPDATED WITH TIERED STRUCTURE */}
+      <section id="packages" className="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-              Unique Sri Lankan <span className="text-orange-400">Experiences</span>
+              Choose Your <span className="text-orange-400">Package</span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg text-gray-300">
-              Immerse yourself in authentic Sri Lankan culture and adventure
+              From budget-friendly to luxury experiences, we have the perfect package for every traveler
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {experiences.map((exp, index) => (
-              <div key={index} className="p-8 bg-gray-800 rounded-3xl transition hover:bg-gray-700 group">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${exp.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <i className={`fas ${exp.icon} text-white text-2xl`}></i>
+            {packages.map((pkg, index) => (
+              <div
+                key={index}
+                className="overflow-hidden relative bg-gray-800 rounded-3xl transition-all duration-300 group hover:transform hover:scale-105 hover:shadow-2xl"
+              >
+                {/* Tier Badge */}
+                <div className="absolute top-0 right-0 left-0 z-10 p-4">
+                  <div className={`inline-block px-4 py-2 text-sm font-bold text-white bg-gradient-to-r ${pkg.gradient} rounded-full shadow-lg`}>
+                    <i className="mr-2 fas fa-crown"></i>{pkg.tier.toUpperCase()}
+                  </div>
+                  {pkg.featured && (
+                    <div className="inline-block ml-2">
+                      <span className="px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-red-500 to-pink-500 rounded-full shadow-lg animate-pulse">
+                        <i className="mr-1 fas fa-star"></i> POPULAR
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <h3 className="mb-4 text-2xl font-bold text-white">{exp.title}</h3>
-                <p className="mb-6 text-gray-300">{exp.description}</p>
-                <a href="#" className="inline-flex items-center font-bold text-orange-400 group-hover:text-orange-300">
-                  Book Experience <i className="ml-2 transition-transform fas fa-arrow-right group-hover:translate-x-2"></i>
-                </a>
+
+                {/* Package Image */}
+                <div className="overflow-hidden relative h-56">
+                  <img 
+                    src={pkg.image} 
+                    alt={pkg.name} 
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-800 to-transparent via-gray-800/50"></div>
+                  
+                  {/* Package Name Overlay */}
+                  <div className="absolute right-0 bottom-0 left-0 p-4">
+                    <h3 className="mb-1 text-2xl font-bold text-white">{pkg.name}</h3>
+                    <p className="text-sm text-orange-400">{pkg.tagline}</p>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  {/* Rating */}
+                  <div className="flex gap-2 items-center mb-4">
+                    <div className="flex items-center text-yellow-400">
+                      <i className="mr-1 text-sm fas fa-star"></i>
+                      <span className="text-sm font-bold text-white">{pkg.rating}</span>
+                    </div>
+                    <span className="text-sm text-gray-400">({pkg.reviews} reviews)</span>
+                  </div>
+
+                  {/* Duration */}
+                  <div className="flex gap-2 items-center mb-4 text-gray-300">
+                    <i className="text-orange-400 fas fa-clock"></i>
+                    <span className="text-sm font-medium">{pkg.duration}</span>
+                  </div>
+
+                  {/* Highlights */}
+                  <div className="overflow-y-auto mb-4 space-y-2 max-h-48">
+                    {pkg.highlights.map((highlight, i) => (
+                      <div key={i} className="flex items-start text-sm text-gray-300">
+                        <i className="flex-shrink-0 mt-1 mr-2 text-xs text-green-400 fas fa-check-circle"></i>
+                        <span>{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Includes Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {pkg.includes.slice(0, 4).map((item, i) => (
+                      <span key={i} className="px-3 py-1 text-xs font-medium text-gray-300 bg-gray-700 rounded-full">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Price and CTA */}
+                  <div className="pt-4 border-t border-gray-700">
+                    <div className="flex justify-between items-center mb-4">
+                      <div>
+                        <div className="text-xs text-gray-400">Starting from</div>
+                        <div className="text-2xl font-bold text-orange-400">{pkg.price}</div>
+                        <div className="text-xs text-gray-500">{pkg.priceRange}</div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <button className="flex justify-center items-center px-6 py-3 w-full font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-lg transition hover:from-orange-600 hover:to-orange-700">
+                        Book Now <i className="ml-2 fas fa-arrow-right"></i>
+                      </button>
+                      {pkg.tier !== 'custom' && (
+                        <button className="flex justify-center items-center px-6 py-2 w-full text-sm font-medium text-orange-400 bg-transparent rounded-xl border border-orange-400 transition hover:bg-orange-400/10">
+                          <i className="mr-2 fas fa-cog"></i> Customize
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Package Comparison Section */}
+          <div className="p-8 mt-12 bg-gray-800 rounded-3xl">
+            <h3 className="mb-6 text-2xl font-bold text-center text-white">Not Sure Which Package?</h3>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div className="p-6 text-center bg-gray-700 rounded-2xl">
+                <i className="mb-4 text-4xl text-yellow-400 fas fa-medal"></i>
+                <h4 className="mb-2 text-xl font-bold text-white">Gold - Best for Luxury</h4>
+                <p className="text-sm text-gray-300">Perfect for travelers seeking premium experiences with all-inclusive luxury services and VIP treatment</p>
+              </div>
+              <div className="p-6 text-center bg-gray-700 rounded-2xl">
+                <i className="mb-4 text-4xl text-gray-400 fas fa-medal"></i>
+                <h4 className="mb-2 text-xl font-bold text-white">Silver - Best Value</h4>
+                <p className="text-sm text-gray-300">Ideal balance of comfort and affordability with quality accommodation and guided experiences</p>
+              </div>
+              <div className="p-6 text-center bg-gray-700 rounded-2xl">
+                <i className="mb-4 text-4xl text-orange-600 fas fa-medal"></i>
+                <h4 className="mb-2 text-xl font-bold text-white">Bronze - Budget Friendly</h4>
+                <p className="text-sm text-gray-300">Great for budget-conscious travelers who want essential services and authentic experiences</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <button className="px-10 py-4 text-lg font-bold text-orange-400 bg-transparent rounded-full border-2 border-orange-400 transition hover:bg-orange-400 hover:text-white">
+              <i className="mr-3 fas fa-phone-alt"></i> Need Help Choosing? Contact Us
+            </button>
           </div>
         </div>
       </section>
 
       {/* Booking CTA */}
-      <section className="overflow-hidden relative py-20 bg-gradient-to-r from-orange-500 via-orange-600 to-yellow-500">
+      <section id='contact' className="overflow-hidden relative py-20 bg-gradient-to-r from-orange-500 via-orange-600 to-yellow-500">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-white/10"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-white/10"></div>
@@ -348,6 +603,7 @@ function Home() {
           </div>
         </div>
       </section>
+      
     </main>
   );
 }
