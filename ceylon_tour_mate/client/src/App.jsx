@@ -102,7 +102,6 @@
 
 // export default App;
 
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
@@ -112,6 +111,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ManageUsers from './pages/ManageUsers';
+import Advertisements from './pages/Advertisements';  // NEW IMPORT
 import Drivers from './pages/Drivers';
 import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
@@ -181,7 +181,17 @@ function App() {
             }
           />
 
-          {/* Manager Routes - UPDATED */}
+          {/* NEW: Advertisements Route - Admin Only */}
+          <Route
+            path="/advertisements"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Advertisements />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Manager Routes */}
           <Route
             path="/drivers"
             element={
@@ -191,7 +201,6 @@ function App() {
             }
           />
 
-          {/* Keep hotel-agents route if you still need it */}
           <Route
             path="/hotel-agents"
             element={

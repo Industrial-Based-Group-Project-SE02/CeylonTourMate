@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import AdvertisementPopup from './AdvertisementPopup';
 function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState('6Lw2SdcT0To');
@@ -73,6 +73,7 @@ function Home() {
   ];
 
   // Updated packages with tiered structure
+  
   const packages = [
     {
       name: 'Gold Package',
@@ -257,9 +258,9 @@ function Home() {
 
   return (
     <main>
+      <AdvertisementPopup />
       {/* Hero Section with Video Background */}
-      <section className="overflow-hidden relative h-screen">
-        {/* Video Background */}
+     <section className="overflow-hidden relative h-screen">
         <div className="absolute inset-0 z-0">
           <video autoPlay muted loop playsInline className="object-cover w-full h-full">
             <source src="/vedio1.mp4" type="video/mp4" />
@@ -272,7 +273,6 @@ function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/70"></div>
         </div>
 
-        {/* Hero Content */}
         <div className="flex relative z-10 items-center h-full">
           <div className="container px-4 mx-auto md:px-12">
             <div className="max-w-3xl animate-fadeInUp">
@@ -300,13 +300,13 @@ function Home() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <div className="absolute bottom-10 left-1/2 z-20 transform -translate-x-1/2">
-          <a href="#destinations" className="text-white animate-bounce">
+          <a href="#advertisements" className="text-white animate-bounce">
             <i className="text-3xl fas fa-chevron-down"></i>
           </a>
         </div>
       </section>
+       
 
       {/* Destinations Carousel */}
       <section id="destinations" className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">

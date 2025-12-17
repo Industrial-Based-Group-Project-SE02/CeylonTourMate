@@ -1128,7 +1128,7 @@ function ManageUsers() {
               </div>
 
               {/* Info Box */}
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+              {/* <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
                 <div className="flex gap-3 items-start">
                   <i className="mt-1 text-blue-600 fas fa-info-circle"></i>
                   <div className="text-sm text-blue-800">
@@ -1141,7 +1141,7 @@ function ManageUsers() {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex gap-3 pt-4">
                 <button

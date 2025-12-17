@@ -24,7 +24,7 @@ function Sidebar() {
       { name: 'System Users', path: '/managers', icon: 'fas fa-users-cog' },
       { name: 'Packages', path: '', icon: 'fas fa-users-cog' },
       { name: 'Bookings', path: '', icon: 'fas fa-calendar-check' },
-      { name: 'Adverticements', path: '', icon: 'fas fa-bullhorn' },
+      { name: 'Advertisements', path: '/advertisements', icon: 'fas fa-bullhorn' },
       { name: 'Drivers', path: '', icon: 'fas fa-id-card' },
       { name: 'Feedbacks', path: '', icon: 'fas fa-comments' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
@@ -33,7 +33,7 @@ function Sidebar() {
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
       { name: 'Drivers', path: '/drivers', icon: 'fas fa-id-card' },
       
-      { name: 'Hotel Agents', path: '/hotel-agents', icon: 'fas fa-hotel' },
+      // { name: 'All Drivers', path: '/hotel-agents', icon: 'fas fa-hotel' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
     ],
     tourist: [
