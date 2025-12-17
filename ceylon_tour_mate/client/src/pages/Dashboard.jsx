@@ -131,6 +131,7 @@ function Dashboard() {
               <p className="text-green-100">Completed Tours</p>
               <h3 className="mt-2 text-3xl font-bold text-white">5</h3>
             </div>
+            
             <i className="text-4xl text-green-200 fas fa-check-circle"></i>
           </div>
         </div>

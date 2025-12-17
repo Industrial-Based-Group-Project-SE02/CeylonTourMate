@@ -57,7 +57,7 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-orange-600 via-orange-300 to-orange-400">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-700 to-purple-900">
       <div className="p-8 m-4 w-full max-w-md bg-white rounded-2xl shadow-2xl">
         {/* Logo */}
         <div className="flex justify-center mb-6">
@@ -112,7 +112,7 @@ function Register() {
               Email Address
             </label>
             <input
-              type="email"  
+              type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
