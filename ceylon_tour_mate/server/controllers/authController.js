@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
+const path = require('path');
+const fs = require('fs');
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -34,6 +36,7 @@ exports.register = async (req, res) => {
       `INSERT INTO users (email, password, first_name, last_name, phone, role) 
        VALUES ($1, $2, $3, $4, $5, 'tourist') 
        RETURNING id, email, first_name, last_name, role`,
+       RETURNING id, email, first_name, last_name, role, profile_picture`,
       [email.toLowerCase(), hashedPassword, firstName, lastName, phone]
     );
 
@@ -49,6 +52,8 @@ exports.register = async (req, res) => {
         firstName: user.first_name,
         lastName: user.last_name,
         role: user.role
+        role: user.role,
+        profilePicture: user.profile_picture
       }
     });
   } catch (error) {
@@ -100,6 +105,8 @@ exports.login = async (req, res) => {
         firstName: user.first_name,
         lastName: user.last_name,
         role: user.role
+        role: user.role,
+        profilePicture: user.profile_picture
       }
     });
   } catch (error) {
@@ -113,6 +120,7 @@ exports.getProfile = async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT id, email, first_name, last_name, phone, role, created_at 
+      `SELECT id, email, first_name, last_name, phone, role, profile_picture, created_at 
        FROM users WHERE id = $1`,
       [req.user.id]
     );
@@ -130,6 +138,7 @@ exports.getProfile = async (req, res) => {
       lastName: user.last_name,
       phone: user.phone,
       role: user.role,
+      profilePicture: user.profile_picture,
       createdAt: user.created_at
     });
   } catch (error) {
@@ -148,6 +157,7 @@ exports.updateProfile = async (req, res) => {
        SET first_name = $1, last_name = $2, phone = $3, updated_at = CURRENT_TIMESTAMP
        WHERE id = $4
        RETURNING id, email, first_name, last_name, phone, role`,
+       RETURNING id, email, first_name, last_name, phone, role, profile_picture`,
       [firstName, lastName, phone, req.user.id]
     );
 
@@ -162,11 +172,112 @@ exports.updateProfile = async (req, res) => {
         lastName: user.last_name,
         phone: user.phone,
         role: user.role
+        role: user.role,
+        profilePicture: user.profile_picture
       }
     });
   } catch (error) {
     console.error('Update profile error:', error);
     res.status(500).json({ error: 'Failed to update profile' });
+  }
+};
+
+// Upload profile picture
+exports.uploadProfilePicture = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Get old profile picture to delete it
+    const oldPicResult = await pool.query(
+      'SELECT profile_picture FROM users WHERE id = $1',
+      [req.user.id]
+    );
+
+    const oldPicture = oldPicResult.rows[0]?.profile_picture;
+
+    // Delete old profile picture if exists
+    if (oldPicture) {
+      const oldPath = path.join(__dirname, '../uploads/profiles', path.basename(oldPicture));
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+    }
+
+    // Update database with new profile picture path
+    const filename = req.file.filename;
+    const profilePictureUrl = `/uploads/profiles/${filename}`;
+
+    const result = await pool.query(
+      `UPDATE users 
+       SET profile_picture = $1, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $2
+       RETURNING id, email, first_name, last_name, role, profile_picture`,
+      [profilePictureUrl, req.user.id]
+    );
+
+    const user = result.rows[0];
+
+    res.json({
+      message: 'Profile picture uploaded successfully',
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        role: user.role,
+        profilePicture: user.profile_picture
+      }
+    });
+  } catch (error) {
+    console.error('Upload profile picture error:', error);
+    
+    // Delete uploaded file if database update fails
+    if (req.file) {
+      const filePath = req.file.path;
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+    
+    res.status(500).json({ error: 'Failed to upload profile picture' });
+  }
+};
+
+// Delete profile picture
+exports.deleteProfilePicture = async (req, res) => {
+  try {
+    // Get current profile picture
+    const result = await pool.query(
+      'SELECT profile_picture FROM users WHERE id = $1',
+      [req.user.id]
+    );
+
+    const profilePicture = result.rows[0]?.profile_picture;
+
+    if (!profilePicture) {
+      return res.status(404).json({ error: 'No profile picture to delete' });
+    }
+
+    // Delete file from disk
+    const filePath = path.join(__dirname, '../uploads/profiles', path.basename(profilePicture));
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
+    // Update database
+    await pool.query(
+      `UPDATE users 
+       SET profile_picture = NULL, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $1`,
+      [req.user.id]
+    );
+
+    res.json({ message: 'Profile picture deleted successfully' });
+  } catch (error) {
+    console.error('Delete profile picture error:', error);
+    res.status(500).json({ error: 'Failed to delete profile picture' });
   }
 };
 

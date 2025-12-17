@@ -37,6 +37,7 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-700 to-purple-900">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-orange-600 via-orange-300 to-orange-400">
       <div className="p-8 m-4 w-full max-w-md bg-white rounded-2xl shadow-2xl">
         {/* Logo */}
         <div className="flex justify-center mb-6">
@@ -47,6 +48,7 @@ function Login() {
 
         <h2 className="mb-2 text-3xl font-bold text-center text-gray-800">Welcome Back</h2>
         <p className="mb-8 text-center text-gray-600">Login to Ceylon Tour Mate</p>
+        <p className="mb-8 text-center text-gray-600">Login to CeylonTourMate</p>
 
         {error && (
           <div className="flex gap-2 items-center p-4 mb-6 text-red-700 bg-red-100 rounded-lg border border-red-300">
@@ -118,11 +120,13 @@ function Login() {
 
         {/* Test Credentials */}
         <div className="p-4 mt-6 bg-gray-50 rounded-lg border border-gray-200">
+        {/* <div className="p-4 mt-6 bg-gray-50 rounded-lg border border-gray-200">
           <p className="mb-2 text-xs font-semibold text-gray-700">Test Credentials:</p>
           <div className="space-y-1 text-xs text-gray-600">
             <p><strong>Admin:</strong> admin@ceylontourmate.com / Admin@123</p>
           </div>
         </div>
+        </div> */}
 
         <div className="mt-6 text-center">
           <Link to="/" className="text-sm text-gray-600 hover:text-blue-600">
