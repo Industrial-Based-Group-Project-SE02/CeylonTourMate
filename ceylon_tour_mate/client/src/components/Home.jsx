@@ -261,13 +261,7 @@ function Home() {
       <section className="overflow-hidden relative h-screen">
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="object-cover w-full h-full"
-          >
+          <video autoPlay muted loop playsInline className="object-cover w-full h-full">
             <source src="/vedio1.mp4" type="video/mp4" />
             <img
               src="https://images.unsplash.com/photo-1591273531346-bd946dab7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"

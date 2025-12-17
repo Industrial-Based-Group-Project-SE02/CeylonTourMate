@@ -39,6 +39,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -66,10 +67,21 @@ const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/drivers', driverRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  
+  // Multer errors
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ error: 'File size is too large. Max size is 5MB' });
+  }
+  
+  if (err.message && err.message.includes('Only image files')) {
+    return res.status(400).json({ error: err.message });
+  }
+  
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
