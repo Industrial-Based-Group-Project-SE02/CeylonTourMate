@@ -282,7 +282,24 @@ function ManageUsers() {
                   className="px-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
+                <p className="mt-1 text-xs text-gray-500">Minimum 6 characters</p>
               </div>
+
+              {/* Info Box */}
+              {/* <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="flex gap-3 items-start">
+                  <i className="mt-1 text-blue-600 fas fa-info-circle"></i>
+                  <div className="text-sm text-blue-800">
+                    <p className="font-semibold">Manager Permissions:</p>
+                    <ul className="mt-2 ml-4 space-y-1 list-disc">
+                      <li>Can create and manage driver accounts</li>
+                      <li>Can view and filter all users</li>
+                      <li>Cannot create managers or admins</li>
+                      <li>Has access to driver management page</li>
+                    </ul>
+                  </div>
+                </div>
+              </div> */}
 
               <div className="flex gap-3">
                 <button

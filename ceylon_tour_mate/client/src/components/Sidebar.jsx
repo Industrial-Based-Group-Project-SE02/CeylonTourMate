@@ -16,15 +16,19 @@ function Sidebar() {
   const navigation = {
     admin: [
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
-      { name: 'Managers', path: '/managers', icon: 'fas fa-users-cog' },
-      { name: 'All Users', path: '/all-users', icon: 'fas fa-users' },
+      { name: 'System Users', path: '/managers', icon: 'fas fa-users-cog' },
+      { name: 'Packages', path: '', icon: 'fas fa-users-cog' },
+      { name: 'Bookings', path: '', icon: 'fas fa-calendar-check' },
+      { name: 'Advertisements', path: '/advertisements', icon: 'fas fa-bullhorn' },
+      { name: 'Drivers', path: '', icon: 'fas fa-id-card' },
+      { name: 'Feedbacks', path: '', icon: 'fas fa-comments' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
     ],
     manager: [
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
       { name: 'Drivers', path: '/drivers', icon: 'fas fa-id-card' },
-      { name: 'Hotel Agents', path: '/hotel-agents', icon: 'fas fa-hotel' },
-      { name: 'Driver Management', path: '/tourist/driverManagement', icon: 'fas fa-car' }, // Fixed icon
+      
+      // { name: 'All Drivers', path: '/hotel-agents', icon: 'fas fa-hotel' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
     ],
     tourist: [
