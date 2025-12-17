@@ -680,6 +680,7 @@ function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   
   // Modals
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -703,11 +704,13 @@ function ManageUsers() {
 
   useEffect(() => {
     fetchUsers();
+  }, []);
   }, [filters]);
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
+      const response = await axios.get('http://localhost:5000/api/users');
       const params = new URLSearchParams();
       
       if (filters.role !== 'all') params.append('role', filters.role);
@@ -725,6 +728,11 @@ function ManageUsers() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:5000/api/users', formData);
+      setShowModal(false);
   const handleCreateUser = async (e) => {
     e.preventDefault();
     try {
@@ -776,6 +784,7 @@ function ManageUsers() {
     return colors[role] || 'bg-gray-100 text-gray-800';
   };
 
+  if (loading) {
   const getProfileImageUrl = (picturePath) => {
     if (!picturePath) return null;
     return `http://localhost:5000${picturePath}`;
@@ -814,6 +823,20 @@ function ManageUsers() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Manage Users</h1>
+            <p className="text-gray-600">
+              {user?.role === 'admin' ? 'Manage managers' : 'Manage drivers and hotel agents'}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowModal(true)}
+            className="flex gap-2 items-center px-6 py-3 font-semibold text-white bg-blue-600 rounded-lg shadow-lg transition hover:bg-blue-700"
+          >
+            <i className="fas fa-plus"></i>
+            Add {user?.role === 'admin' ? 'Manager' : 'User'}
+          </button>
         {/* Header */}
         <div className="flex flex-col gap-4 justify-between md:flex-row md:items-center">
           <div>
@@ -986,6 +1009,9 @@ function ManageUsers() {
                   <tr key={u.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
+                        <div className="flex justify-center items-center w-10 h-10 text-sm font-bold text-white bg-blue-500 rounded-full">
+                          {u.firstName?.[0]}{u.lastName?.[0]}
+                        </div>
                         {u.profilePicture ? (
                           <img
                             src={getProfileImageUrl(u.profilePicture)}
@@ -1044,6 +1070,21 @@ function ManageUsers() {
             </table>
           </div>
         </div>
+      </div>
+
+      {/* Add User Modal */}
+      {showModal && (
+        <div className="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50">
+          <div className="p-8 m-4 w-full max-w-md bg-white rounded-2xl shadow-2xl">
+            <h2 className="mb-6 text-2xl font-bold text-gray-800">
+              Add New {user?.role === 'admin' ? 'Manager' : 'User'}
+            </h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block mb-2 text-sm font-semibold text-gray-700">
+                    First Name
 
         {/* No Results */}
         {users.length === 0 && !loading && (
@@ -1080,6 +1121,7 @@ function ManageUsers() {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-semibold text-gray-700">
+                    Last Name
                     Last Name *
                   </label>
                   <input
@@ -1093,6 +1135,7 @@ function ManageUsers() {
               </div>
 
               <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">Email</label>
                 <label className="block mb-2 text-sm font-semibold text-gray-700">Email *</label>
                 <input
                   type="email"
@@ -1110,6 +1153,25 @@ function ManageUsers() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="px-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {user?.role === 'manager' && (
+                <div>
+                  <label className="block mb-2 text-sm font-semibold text-gray-700">Role</label>
+                  <select
+                    value={formData.role}
+                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    className="px-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="driver">Driver</option>
+                    <option value="hotel_agent">Hotel Agent</option>
+                  </select>
+                </div>
+              )}
+
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">Password</label>
                   placeholder="+94771234567"
                 />
               </div>
@@ -1122,6 +1184,10 @@ function ManageUsers() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="px-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
+                />
+              </div>
+
+              <div className="flex gap-3">
                   minLength={6}
                 />
                 <p className="mt-1 text-xs text-gray-500">Minimum 6 characters</p>
@@ -1148,6 +1214,11 @@ function ManageUsers() {
                   type="submit"
                   className="flex-1 px-6 py-3 font-semibold text-white bg-blue-600 rounded-lg transition hover:bg-blue-700"
                 >
+                  Create User
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
                   <i className="mr-2 fas fa-user-plus"></i>
                   Create Manager
                 </button>

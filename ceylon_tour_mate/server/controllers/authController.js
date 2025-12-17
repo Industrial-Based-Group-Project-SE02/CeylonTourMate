@@ -35,6 +35,7 @@ exports.register = async (req, res) => {
     const result = await client.query(
       `INSERT INTO users (email, password, first_name, last_name, phone, role) 
        VALUES ($1, $2, $3, $4, $5, 'tourist') 
+       RETURNING id, email, first_name, last_name, role`,
        RETURNING id, email, first_name, last_name, role, profile_picture`,
       [email.toLowerCase(), hashedPassword, firstName, lastName, phone]
     );
@@ -50,6 +51,7 @@ exports.register = async (req, res) => {
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
+        role: user.role
         role: user.role,
         profilePicture: user.profile_picture
       }
@@ -102,6 +104,7 @@ exports.login = async (req, res) => {
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
+        role: user.role
         role: user.role,
         profilePicture: user.profile_picture
       }
@@ -116,6 +119,7 @@ exports.login = async (req, res) => {
 exports.getProfile = async (req, res) => {
   try {
     const result = await pool.query(
+      `SELECT id, email, first_name, last_name, phone, role, created_at 
       `SELECT id, email, first_name, last_name, phone, role, profile_picture, created_at 
        FROM users WHERE id = $1`,
       [req.user.id]
@@ -152,6 +156,7 @@ exports.updateProfile = async (req, res) => {
       `UPDATE users 
        SET first_name = $1, last_name = $2, phone = $3, updated_at = CURRENT_TIMESTAMP
        WHERE id = $4
+       RETURNING id, email, first_name, last_name, phone, role`,
        RETURNING id, email, first_name, last_name, phone, role, profile_picture`,
       [firstName, lastName, phone, req.user.id]
     );
@@ -166,6 +171,7 @@ exports.updateProfile = async (req, res) => {
         firstName: user.first_name,
         lastName: user.last_name,
         phone: user.phone,
+        role: user.role
         role: user.role,
         profilePicture: user.profile_picture
       }

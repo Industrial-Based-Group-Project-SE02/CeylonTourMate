@@ -1,4 +1,34 @@
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import Navbar from './components/Navbar';
+// import Footer from './components/Footer';
+// import Home from './components/Home';
+// import Users from './pages/Users';
+
+// function App() {
+//   return (
+//     <Router>
+//       <div className="min-h-screen bg-gray-50">
+//         <div className="relative">
+//           <div className="absolute top-0 right-0 left-0 z-50">
+//             <Navbar />
+//           </div>
+          
+//           <Routes>
+//             <Route path="/" element={<Home />} />
+//             <Route path="/users" element={<Users />} />
+//           </Routes>
+//         </div>
+        
+//         <Footer />
+//       </div>
+//     </Router>
+//   );
+// }
+
+// export default App;
+
+
+
 // import { AuthProvider } from './context/AuthContext';
 // import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
@@ -112,6 +142,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ManageUsers from './pages/ManageUsers';
+import Profile from './pages/Profile';
+import Unauthorized from './pages/Unauthorized';
+import ProtectedRoute from './components/ProtectedRoute';
+
+import ManagePackage from './manager/ManagePackage';
 import Drivers from './pages/Drivers';
 import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
@@ -142,6 +177,15 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+ <Route 
+ path="/ManagePackage"
+  element={
+    <ProtectedRoute role="manager">
+      <ManagePackage />
+    </ProtectedRoute>
+  } 
+  />
+         
 
           {/* Protected Routes - with Sidebar (no Navbar) */}
           <Route
@@ -175,12 +219,19 @@ function App() {
           <Route
             path="/all-users"
             element={
+              <ProtectedRoute allowedRoles={['admin']}>
               <ProtectedRoute allowedRoles={['admin', 'manager']}>
                 <ManageUsers />
               </ProtectedRoute>
             }
           />
 
+          {/* Manager Routes */}
+          <Route
+            path="/drivers"
+            element={
+              <ProtectedRoute allowedRoles={['manager']}>
+                <ManageUsers />
           {/* Manager Routes - UPDATED */}
           <Route
             path="/drivers"
@@ -191,6 +242,10 @@ function App() {
             }
           />
 
+          <Route
+            path="/hotel-agents"
+            element={
+              <ProtectedRoute allowedRoles={['manager']}>
           {/* Keep hotel-agents route if you still need it */}
           <Route
             path="/hotel-agents"

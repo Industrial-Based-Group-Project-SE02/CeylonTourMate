@@ -4,11 +4,16 @@ import { useAuth } from '../context/AuthContext';
 import DashboardLayout from '../components/DashboardLayout';
 
 function Profile() {
+  const { user } = useAuth();
   const { user, updateUser } = useAuth();
   const [profile, setProfile] = useState({
     firstName: '',
     lastName: '',
     phone: '',
+    email: ''
+  });
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
     email: '',
     profilePicture: null
   });
@@ -34,6 +39,7 @@ function Profile() {
         firstName: response.data.firstName,
         lastName: response.data.lastName,
         phone: response.data.phone || '',
+        email: response.data.email
         email: response.data.email,
         profilePicture: response.data.profilePicture
       });
@@ -272,6 +278,12 @@ function Profile() {
                 Edit
               </button>
             )}
+          </div>
+
+          <div className="flex justify-center mb-6">
+            <div className="flex justify-center items-center w-24 h-24 text-3xl font-bold text-white bg-gradient-to-br from-blue-500 to-purple-500 rounded-full">
+              {profile.firstName?.[0]}{profile.lastName?.[0]}
+            </div>
           </div>
 
           {editing ? (
