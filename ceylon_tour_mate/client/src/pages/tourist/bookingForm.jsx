@@ -15,7 +15,7 @@ export default function BookingForm() {
       description: "Premium experience with all luxury amenities included",
       features: [
         "Luxury SUV + chauffeur",
-        "4★–5★ hotel accommodation",
+        "4★ - 5★ hotel accommodation",
         "Breakfast & dinner included",
         "VIP meet & greet",
         "All tours included",
