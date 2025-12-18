@@ -16,13 +16,13 @@ router.get('/:userId', driverController.getDriverById);
 // Create driver details (after user account created)
 router.post('/:userId/details', driverController.createDriverDetails);
 
-// // Update driver details
-// router.put('/:userId/details', driverController.updateDriverDetails);
+// Update driver details
+router.put('/:userId/details', driverController.updateDriverDetails);
 
-// // Delete driver details
-// router.delete('/:userId/details', driverController.deleteDriverDetails);
+// Delete driver details
+router.delete('/:userId/details', driverController.deleteDriverDetails);
 
-// // Update driver availability status
-// router.patch('/:userId/availability', driverController.updateDriverAvailability);
+// Update driver availability status
+router.patch('/:userId/availability', driverController.updateDriverAvailability);
 
 module.exports = router;
