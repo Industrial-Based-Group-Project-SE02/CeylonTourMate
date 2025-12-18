@@ -224,7 +224,7 @@ function Advertisements() {
           </div>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex gap-2 items-center px-6 py-3 font-semibold text-white bg-orange-500 rounded-lg shadow-lg transition hover:bg-orange-600"
+            className="flex gap-2 items-center px-6 py-3 font-semibold text-white bg-orange-800 rounded-lg shadow-lg transition hover:bg-orange-600"
           >
             <Plus size={20} />
             {showForm ? 'Cancel' : 'New Advertisement'}
@@ -364,7 +364,7 @@ function Advertisements() {
               <div className="flex gap-3 pt-4">
                 <button
                   type="submit"
-                  className="px-6 py-3 font-semibold text-white bg-orange-500 rounded-lg transition hover:bg-orange-600"
+                  className="px-6 py-3 font-semibold text-white bg-orange-800 rounded-lg transition hover:bg-orange-600"
                 >
                   <i className="mr-2 fas fa-save"></i>
                   {editingId ? 'Update Advertisement' : 'Create Advertisement'}
@@ -386,21 +386,21 @@ function Advertisements() {
         <div className="overflow-hidden bg-white rounded-xl shadow-lg">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gradient-to-r from-orange-500 to-yellow-500">
+              <thead className="">
                 <tr>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-bold tracking-wider text-left uppercase text-slate-600">
                     Advertisement
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-bold tracking-wider text-left uppercase text-slate-600">
                     Duration
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-bold tracking-wider text-left uppercase text-slate-600">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-bold tracking-wider text-left uppercase text-slate-600">
                     Stats
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-bold tracking-wider text-left uppercase text-slate-600">
                     Actions
                   </th>
                 </tr>
