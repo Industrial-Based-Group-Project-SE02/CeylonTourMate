@@ -26,21 +26,23 @@ function Sidebar() {
       { name: 'Hotel Agents', path: '/hotel-agents', icon: 'fas fa-hotel' },
       { name: 'Driver Management', path: '/tourist/driverManagement', icon: 'fas fa-car' }, // Fixed icon
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
+
     ],
     tourist: [
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
-      { name: 'Tour Packages', path: '/packages', icon: 'fas fa-suitcase' },
-      { name: 'My Bookings', path: '/my-bookings', icon: 'fas fa-calendar-check' },
+      { name: 'Tour Packages', path: '/tourist/tour_package', icon: 'fas fa-suitcase' },
+      { name: 'My Bookings', path: '/tourist/trip_history', icon: 'fas fa-calendar-check' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
       { name: 'Book a Trip', path: '/tourist/bookingForm', icon: 'fas fa-calendar-plus' },
       { name: 'Feed Back', path: '/tourist/cutomerFeedback', icon: 'fas fa-comment-alt' },
     ],
-    driver: [
-      { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
-      { name: 'My Tours', path: '/my-tours', icon: 'fas fa-route' },
-      { name: 'Schedule', path: '/schedule', icon: 'fas fa-calendar' },
-      { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
-    ],
+   driver: [
+  { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
+  // FIX: Path changed to match App.jsx
+  { name: 'My Tours', path: '/driver/manage-tours', icon: 'fas fa-route' }, 
+  { name: 'Schedule', path: '/schedule', icon: 'fas fa-calendar' },
+  { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
+],
     hotel_agent: [
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
       { name: 'Bookings', path: '/hotel-bookings', icon: 'fas fa-bed' },

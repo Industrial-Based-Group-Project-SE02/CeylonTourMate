@@ -36,7 +36,7 @@
 // });
 
 
-
+const driverRoutes = require('./routes/driverRoutes');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -82,3 +82,12 @@ app.listen(PORT, () => {
   console.log(`📍 API: http://localhost:${PORT}/api`);
   console.log('='.repeat(50) + '\n');
 });
+
+
+
+
+
+
+
+
+app.use('/api/drivers', driverRoutes);
