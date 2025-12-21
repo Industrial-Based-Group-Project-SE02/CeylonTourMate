@@ -36,7 +36,7 @@ function AdvertisementPopup() {
           trackView(allAds[newIndex].id);
           return newIndex;
         });
-      }, 10000); // Change ad every 10 seconds
+      }, 5000); // Change ad every 10 seconds
 
       return () => clearInterval(timer);
     }
@@ -252,3 +252,5 @@ function AdvertisementPopup() {
 }
 
 export default AdvertisementPopup;
+
+

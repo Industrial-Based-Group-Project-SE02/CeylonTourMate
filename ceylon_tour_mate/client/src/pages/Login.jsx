@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 function Login() {
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -12,6 +13,8 @@ function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,20 +23,28 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+  e.preventDefault();
+  setError('');
 
-    const result = await login(formData.email, formData.password);
+  
+  if (!emailRegex.test(formData.email)) {
+    setError('Please enter a valid email address');
+    return;
+  }
 
-    if (result.success) {
-      navigate('/dashboard');
-    } else {
-      setError(result.error);
-    }
+  setLoading(true);
 
-    setLoading(false);
-  };
+  const result = await login(formData.email, formData.password);
+
+  if (result.success) {
+    navigate('/dashboard');
+  } else {
+    setError(result.error);
+  }
+
+  setLoading(false);
+};
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-orange-600 via-orange-300 to-orange-400">

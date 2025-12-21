@@ -9,43 +9,43 @@ function Dashboard() {
       <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-blue-100">Total Managers</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">12</h3>
+              <p className="text-black-100">Total Managers</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">12</h3>
             </div>
-            <i className="text-4xl text-blue-200 fas fa-users-cog"></i>
+            <i className="text-4xl text-black-200 fas fa-users-cog"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-green-500 to-green-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-green-100">Total Drivers</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">45</h3>
+              <p className="text-black-100">Total Drivers</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">45</h3>
             </div>
-            <i className="text-4xl text-green-200 fas fa-id-card"></i>
+            <i className="text-4xl text-black-100 fas fa-id-card"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-purple-100">Total Tourists</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">230</h3>
+              <p className="text-black-100">Total Tourists</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">230</h3>
             </div>
-            <i className="text-4xl text-purple-200 fas fa-users"></i>
+            <i className="text-4xl text-black-100 fas fa-users"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-orange-100">Revenue</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">$45K</h3>
+              <p className="text-black">Revenue</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">$45K</h3>
             </div>
-            <i className="text-4xl text-orange-200 fas fa-dollar-sign"></i>
+            <i className="text-4xl text-black fas fa-dollar-sign"></i>
           </div>
         </div>
       </div>
@@ -77,33 +77,33 @@ function Dashboard() {
       <h1 className="text-3xl font-bold text-gray-800">Manager Dashboard</h1>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-blue-100">Active Drivers</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">15</h3>
+              <p className="text-black">Active Drivers</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">15</h3>
             </div>
-            <i className="text-4xl text-blue-200 fas fa-id-card"></i>
+            <i className="text-4xl text-black fas fa-id-card"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-green-500 to-green-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-green-100">Active Tours</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">8</h3>
+              <p className="text-black">Active Tours</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">8</h3>
             </div>
-            <i className="text-4xl text-green-200 fas fa-route"></i>
+            <i className="text-4xl text-black fas fa-route"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg black">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-purple-100">Hotel Agents</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">12</h3>
+              <p className="text-black">All Bookings</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">12</h3>
             </div>
-            <i className="text-4xl text-purple-200 fas fa-hotel"></i>
+            <i className="text-4xl text-black fas fa-hotel"></i>
           </div>
         </div>
       </div>
@@ -115,24 +115,24 @@ function Dashboard() {
       <h1 className="text-3xl font-bold text-gray-800">Welcome, {user?.firstName}!</h1>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-blue-100">Upcoming Tours</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">3</h3>
+              <p className="text-black">Upcoming Tours</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">3</h3>
             </div>
-            <i className="text-4xl text-blue-200 fas fa-calendar-check"></i>
+            <i className="text-4xl text-black fas fa-calendar-check"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-green-500 to-green-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-green-100">Completed Tours</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">5</h3>
+              <p className="text-black">Completed Tours</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">5</h3>
             </div>
             
-            <i className="text-4xl text-green-200 fas fa-check-circle"></i>
+            <i className="text-4xl text-black fas fa-check-circle"></i>
           </div>
         </div>
       </div>
@@ -149,67 +149,40 @@ function Dashboard() {
       <h1 className="text-3xl font-bold text-gray-800">Driver Dashboard</h1>
       
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-blue-100">Today's Tours</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">2</h3>
+              <p className="text-black">Today's Tours</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">2</h3>
             </div>
-            <i className="text-4xl text-blue-200 fas fa-route"></i>
+            <i className="text-4xl text-black fas fa-route"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-green-500 to-green-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg black">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-green-100">Hours Driven</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">145</h3>
+              <p className="text-black">Hours Driven</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">145</h3>
             </div>
-            <i className="text-4xl text-green-200 fas fa-clock"></i>
+            <i className="text-4xl text-black fas fa-clock"></i>
           </div>
         </div>
 
-        <div className="p-6 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow-lg">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg black">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-purple-100">Rating</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">4.8</h3>
+              <p className="text-black">Rating</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">4.8</h3>
             </div>
-            <i className="text-4xl text-purple-200 fas fa-star"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderHotelAgentDashboard = () => (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-800">Hotel Agent Dashboard</h1>
-      
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl shadow-lg">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-blue-100">Active Bookings</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">18</h3>
-            </div>
-            <i className="text-4xl text-blue-200 fas fa-bed"></i>
-          </div>
-        </div>
-
-        <div className="p-6 bg-gradient-to-br from-green-500 to-green-700 rounded-xl shadow-lg">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-green-100">Properties</p>
-              <h3 className="mt-2 text-3xl font-bold text-white">5</h3>
-            </div>
-            <i className="text-4xl text-green-200 fas fa-building"></i>
+            <i className="text-4xl text-black fas fa-star"></i>
           </div>
         </div>
       </div>
     </div>
   );
 
+ 
   const renderDashboard = () => {
     switch (user?.role) {
       case 'admin':
