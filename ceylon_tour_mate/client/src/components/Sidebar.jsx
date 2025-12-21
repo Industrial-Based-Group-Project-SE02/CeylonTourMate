@@ -31,6 +31,7 @@ function Sidebar() {
       { name: 'Drivers', path: '/drivers', icon: 'fas fa-id-card' },
       { name: 'Feedbacks', path: '/feedbacks', icon: 'fas fa-comments' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
+
     ],
     tourist: [
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
@@ -40,10 +41,17 @@ function Sidebar() {
       { name: 'Feed Back', path: '/tourist/cutomerFeedback', icon: 'fas fa-comment-alt' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
     ],
-    driver: [
+   driver: [
+  { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
+  // FIX: Path changed to match App.jsx
+  { name: 'My Tours', path: '/driver/manage-tours', icon: 'fas fa-route' }, 
+  { name: 'Schedule', path: '/schedule', icon: 'fas fa-calendar' },
+  { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
+],
+    hotel_agent: [
       { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
-      { name: 'My Tours', path: '/my-tours', icon: 'fas fa-route' },
-      { name: 'Schedule', path: '/schedule', icon: 'fas fa-calendar' },
+      { name: 'Bookings', path: '/hotel-bookings', icon: 'fas fa-bed' },
+      { name: 'Properties', path: '/properties', icon: 'fas fa-building' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
     ],
    

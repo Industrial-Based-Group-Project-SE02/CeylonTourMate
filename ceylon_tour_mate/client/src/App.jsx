@@ -13,6 +13,8 @@ import Drivers from './pages/Drivers';
 import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
 import ProtectedRoute from './components/ProtectedRoute';
+
+// Tourist Pages
 import BookingForm from './pages/tourist/bookingForm'; 
 import CustomerFeedback from './pages/tourist/cutomerFeedback'; 
 import AdminDrivers from './pages/AdminDrivers';
@@ -24,27 +26,24 @@ import TripHistory from './pages/tourist/trip_history';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
+  // Helper to wrap pages with Sidebar layout
+  const withSidebar = (Component, allowedRoles = []) => (
+    <ProtectedRoute allowedRoles={allowedRoles}>
+      <div className="flex min-h-screen bg-gray-50">
+        <Sidebar />
+        <div className="flex-1 md:ml-64 h-screen overflow-y-auto">
+          <Component />
+        </div>
+      </div>
+    </ProtectedRoute>
+  );
+
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public Routes - with Navbar */}
-          <Route
-            path="/"
-            element={
-              <div className="min-h-screen bg-gray-50">
-                <div className="relative">
-                  <div className="absolute top-0 right-0 left-0 z-50">
-                    <Navbar />
-                  </div>
-                  <Home />
-                </div>
-                <Footer />
-              </div>
-            }
-          />
-
-          {/* Auth Routes - no Navbar */}
+          {/* Public Routes */}
+          <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
@@ -175,13 +174,7 @@ function App() {
             </ProtectedRoute>
           } />
 
-          {/* Catch-all route for 404 */}
-          <Route path="*" element={<div className="flex justify-center items-center min-h-screen">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-800">404 - Page Not Found</h1>
-              <p className="mt-2 text-gray-600">The page you're looking for doesn't exist.</p>
-            </div>
-          </div>} />
+          <Route path="*" element={<div className="h-screen flex items-center justify-center"><h1>404 - Not Found</h1></div>} />
         </Routes>
       </Router>
     </AuthProvider>
