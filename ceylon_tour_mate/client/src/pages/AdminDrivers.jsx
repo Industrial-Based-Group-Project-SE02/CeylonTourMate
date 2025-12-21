@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DashboardLayout from '../components/DashboardLayout';
 
-function Drivers() {
+function AdminDrivers() {
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDriver, setSelectedDriver] = useState(null);
@@ -623,4 +623,4 @@ function Drivers() {
   );
 }
 
-export default Drivers;
+export default AdminDrivers;

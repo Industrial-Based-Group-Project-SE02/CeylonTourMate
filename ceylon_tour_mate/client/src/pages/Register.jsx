@@ -16,6 +16,7 @@ function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -24,37 +25,48 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+  e.preventDefault();
+  setError('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+  // ✅ EMAIL VALIDATION
+  if (!emailRegex.test(formData.email)) {
+    setError('Please enter a valid email address');
+    return;
+  }
 
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
 
-    setLoading(true);
+  if (formData.password.length < 6) {
+    setError('Password must be at least 6 characters');
+    return;
+  }
+  if (formData.phone && !/^[0-9]{10}$/.test(formData.phone)) {
+  setError('Phone number must be 10 digits');
+  return;
+}
 
-    const result = await register({
-      email: formData.email,
-      password: formData.password,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      phone: formData.phone
-    });
+  setLoading(true);
 
-    if (result.success) {
-      navigate('/dashboard');
-    } else {
-      setError(result.error);
-    }
+  const result = await register({
+    email: formData.email,
+    password: formData.password,
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    phone: formData.phone
+  });
 
-    setLoading(false);
-  };
+  if (result.success) {
+    navigate('/dashboard');
+  } else {
+    setError(result.error);
+  }
+
+  setLoading(false);
+};
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-900 via-blue-700 to-purple-900">

@@ -31,12 +31,16 @@ const userRoutes = require('./routes/userRoutes');
 const driverRoutes = require('./routes/driverRoutes');
 const advertisementRoutes = require('./routes/advertisementRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
+const packageRoutes = require('./routes/packageRoutes'); 
 
+app.use('/api/packages', packageRoutes); 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/advertisements', advertisementRoutes);
 app.use('/api/feedback', feedbackRoutes);
+
+
 
 
 // Error handling middleware

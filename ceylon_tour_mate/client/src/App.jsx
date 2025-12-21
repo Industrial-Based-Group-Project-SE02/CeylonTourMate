@@ -2,13 +2,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Sidebar from './components/Sidebar'; // Add this import
+import Sidebar from './components/Sidebar'; 
 import Home from './components/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ManageUsers from './pages/ManageUsers';
-import Advertisements from './pages/Advertisements';  // NEW IMPORT
+import Advertisements from './pages/Advertisements';  
 import Drivers from './pages/Drivers';
 import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
@@ -16,8 +16,12 @@ import ProtectedRoute from './components/ProtectedRoute';
 import BookingForm from './pages/tourist/bookingForm'; 
 import CustomerFeedback from './pages/tourist/cutomerFeedback'; 
 import AdminDrivers from './pages/AdminDrivers';
-import DriverManagement from './pages/tourist/driverManagement'; // Add this import
 import Feedbacks from './pages/Feedbacks';
+import ManagePackage from './manager/ManagePackage';
+import PackageDetails from './manager/PackageDetails';
+import TourPackage from './pages/tourist/tour_package';
+import TripHistory from './pages/tourist/trip_history';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   return (
@@ -63,7 +67,11 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
+          <Route path="/admin-drivers" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDrivers />
+            </ProtectedRoute>
+          } />
           <Route
             path="/advertisements"
             element={
@@ -89,14 +97,30 @@ function App() {
             }
           />
 
-         <Route
-            path="/drivers"
+         
+
+         
+          
+
+          {/* // Manager & Admin - Your existing page */}
+          <Route path="/drivers" element={
+            <ProtectedRoute allowedRoles={['manager', 'admin']}>
+              <Drivers />
+            </ProtectedRoute>
+          } />
+
+
+          <Route 
+          path="/ManagePackage"
             element={
-              <ProtectedRoute allowedRoles={['admin', 'manager']}>
-                <AdminDrivers />
+              <ProtectedRoute role="manager">
+                <ManagePackage />
               </ProtectedRoute>
-            }
-          />
+            } 
+            />
+           <Route path="/package/:id" element={<PackageDetails />} />
+
+
 
           {/* Tourist Routes */}
           
@@ -114,6 +138,21 @@ function App() {
             }
           />
 
+         
+         <Route
+  path="/tourist/tour_package"
+  element={
+    <ProtectedRoute allowedRoles={['tourist']}>
+      <div className="flex min-h-screen bg-gray-50">
+        <Sidebar />
+        <div className="flex-1 md:ml-64">
+          <TourPackage />
+        </div>
+      </div>
+    </ProtectedRoute>
+  }
+/>
+
           <Route
             path="/tourist/bookingForm"
             element={
@@ -127,48 +166,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* Manager Routes - Driver Management */}
-          <Route
-            path="/drivers"
-            element={
-              <ProtectedRoute allowedRoles={['manager', 'admin']}>
-                <Drivers />
-              </ProtectedRoute>
-            }
-          />
-		  
-
-          
-
-          {/* Manager Routes */}
-          <Route
-            path="/drivers"
-            element={
-              <ProtectedRoute allowedRoles={['manager']}>
-                <div className="flex min-h-screen bg-gray-50">
-                  <Sidebar />
-                  <div className="flex-1 md:ml-64">
-                    <ManageUsers />
-                  </div>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/hotel-agents"
-            element={
-              <ProtectedRoute allowedRoles={['manager']}>
-                <div className="flex min-h-screen bg-gray-50">
-                  <Sidebar />
-                  <div className="flex-1 md:ml-64">
-                    <ManageUsers />
-                  </div>
-                </div>
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/tourist/trip_history" element={
+            <ProtectedRoute allowedRoles={['tourist']}>
+              <div className="flex min-h-screen bg-gray-50">
+                <Sidebar />
+                <div className="flex-1 md:ml-64"><TripHistory /></div>
+              </div>
+            </ProtectedRoute>
+          } />
 
           {/* Catch-all route for 404 */}
           <Route path="*" element={<div className="flex justify-center items-center min-h-screen">

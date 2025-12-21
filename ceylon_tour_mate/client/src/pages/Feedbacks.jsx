@@ -169,10 +169,10 @@ function Feedbacks() {
         {/* Statistics Cards */}
         {!statsLoading && stats && (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
-            <div className="p-6 text-white bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+            <div className="p-6 text-black bg-gradient-to-br rounded-xl shadow-lg">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-blue-100">Total Feedbacks</p>
+                  <p className="text-sm font-medium text-black">Total Feedbacks</p>
                   <p className="mt-2 text-3xl font-bold">{stats.overall.total_feedbacks}</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/20">
@@ -181,10 +181,10 @@ function Feedbacks() {
               </div>
             </div>
 
-            <div className="p-6 text-white bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg">
+            <div className="p-6 text-black bg-gradient-to-br rounded-xl shadow-lg">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-green-100">Average Rating</p>
+                  <p className="text-sm font-medium text-black">Average Rating</p>
                   <p className="mt-2 text-3xl font-bold">{stats.overall.average_rating || 0} / 5</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/20">
@@ -193,10 +193,10 @@ function Feedbacks() {
               </div>
             </div>
 
-            <div className="p-6 text-white bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg">
+            <div className="p-6 text-black bg-gradient-to-br rounded-xl shadow-lg">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-emerald-100">Positive (4-5★)</p>
+                  <p className="text-sm font-medium text-black">Positive (4-5★)</p>
                   <p className="mt-2 text-3xl font-bold">{stats.overall.positive_feedbacks}</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/20">
@@ -205,10 +205,10 @@ function Feedbacks() {
               </div>
             </div>
 
-            <div className="p-6 text-white bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-lg">
+            <div className="p-6 text-black bg-gradient-to-br rounded-xl shadow-lg">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-red-100">Negative (1-2★)</p>
+                  <p className="text-sm font-medium text-black">Negative (1-2★)</p>
                   <p className="mt-2 text-3xl font-bold">{stats.overall.negative_feedbacks}</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/20">
@@ -410,13 +410,13 @@ function Feedbacks() {
                   </div>
 
                   {/* Actions */}
-                  <button
+                  {/* <button
                     onClick={() => handleDelete(feedback.id)}
                     className="p-2 text-red-600 rounded-lg transition hover:bg-red-50"
                     title="Delete feedback"
                   >
                     <FaTrash />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))

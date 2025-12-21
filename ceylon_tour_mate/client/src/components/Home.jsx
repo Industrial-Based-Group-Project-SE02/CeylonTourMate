@@ -124,7 +124,7 @@ function Home() {
       includes: ['4-Star Hotels', 'Breakfast & Dinner', 'Comfort Transport', 'Driver', 'Selected Activities']
     },
     {
-      name: 'Bronze Package',
+      name: 'Platinum Package',
       tier: 'bronze',
       duration: '3-7 Days',
       priceRange: '$599 - $999',
@@ -300,11 +300,11 @@ function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 z-20 transform -translate-x-1/2">
+        {/* <div className="absolute bottom-10 left-1/2 z-20 transform -translate-x-1/2">
           <a href="#advertisements" className="text-white animate-bounce">
             <i className="text-3xl fas fa-chevron-down"></i>
           </a>
-        </div>
+        </div> */}
       </section>
        
 
@@ -548,7 +548,7 @@ function Home() {
               </div>
               <div className="p-6 text-center bg-gray-700 rounded-2xl">
                 <i className="mb-4 text-4xl text-orange-600 fas fa-medal"></i>
-                <h4 className="mb-2 text-xl font-bold text-white">Bronze - Budget Friendly</h4>
+                <h4 className="mb-2 text-xl font-bold text-white">Platinum - Budget Friendly</h4>
                 <p className="text-sm text-gray-300">Great for budget-conscious travelers who want essential services and authentic experiences</p>
               </div>
             </div>
