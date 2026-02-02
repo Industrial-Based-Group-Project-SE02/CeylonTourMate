@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import AdvertisementPopup from './AdvertisementPopup';
+
 function Home() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState('6Lw2SdcT0To');
   const [videos, setVideos] = useState([]);
@@ -72,106 +77,59 @@ function Home() {
     }
   ];
 
-  // Updated packages with tiered structure
-  
-  const packages = [
-    {
-      name: 'Gold Package',
-      tier: 'gold',
-      duration: '7-14 Days',
-      priceRange: '$1,599 - $2,499',
-      price: '$1,599',
-      image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      rating: 5.0,
-      reviews: 312,
-      featured: true,
-      tagline: 'Premium Experience',
-      gradient: 'from-yellow-400 via-yellow-500 to-orange-500',
-      highlights: [
-        '5-Star Luxury Hotels & Resorts',
-        'Premium Vehicle Transport',
-        'Gourmet Meals (All Included)',
-        'English-Speaking Tour Guide',
-        'All Activities & Entrance Fees',
-        '24/7 Concierge Service',
-        'Airport VIP Lounge Access',
-        'Complimentary Spa Treatment'
-      ],
-      includes: ['Luxury Hotels', 'All Meals', 'Premium Transport', 'Expert Guide', 'All Activities', 'Concierge']
-    },
-    {
-      name: 'Silver Package',
-      tier: 'silver',
-      duration: '5-10 Days',
-      priceRange: '$999 - $1,599',
-      price: '$999',
-      image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      rating: 4.8,
-      reviews: 234,
-      featured: false,
-      tagline: 'Comfort Experience',
-      gradient: 'from-gray-300 via-gray-400 to-gray-500',
-      highlights: [
-        '4-Star Quality Hotels',
-        'Comfort Vehicle Transport',
-        'Breakfast & Dinner Included',
-        'English-Speaking Driver',
-        'Selected Activities Included',
-        'Daily Support Service',
-        'Airport Transfers',
-        'Travel Insurance'
-      ],
-      includes: ['4-Star Hotels', 'Breakfast & Dinner', 'Comfort Transport', 'Driver', 'Selected Activities']
-    },
-    {
-      name: 'Platinum Package',
-      tier: 'bronze',
-      duration: '3-7 Days',
-      priceRange: '$599 - $999',
-      price: '$599',
-      image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      rating: 4.7,
-      reviews: 189,
-      featured: false,
-      tagline: 'Essential Experience',
-      gradient: 'from-orange-600 via-orange-700 to-orange-800',
-      highlights: [
-        '3-Star Standard Hotels',
-        'Standard Vehicle Transport',
-        'Breakfast Included',
-        'Airport Transfers',
-        'Basic Activities Included',
-        'Email Support',
-        'Travel Guide Book',
-        'Local SIM Card'
-      ],
-      includes: ['3-Star Hotels', 'Breakfast', 'Standard Transport', 'Airport Transfer', 'Basic Activities']
-    },
-    {
-      name: 'Custom Package',
-      tier: 'custom',
-      duration: 'Flexible',
-      priceRange: 'Contact Us',
-      price: 'Custom',
-      image: 'https://images.unsplash.com/photo-1566552881560-0be862a7c445?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      rating: 4.9,
-      reviews: 156,
-      featured: false,
-      tagline: 'Build Your Own',
-      gradient: 'from-purple-500 via-pink-500 to-red-500',
-      highlights: [
-        'Fully Customizable Itinerary',
-        'Choose Your Accommodation Level',
-        'Select Your Activities',
-        'Flexible Duration',
-        'Mix & Match Services',
-        'Personal Trip Planner',
-        'Budget-Friendly Options',
-        'Upgrade Anytime'
-      ],
-      includes: ['Your Choice', 'Flexible Options', 'Personalized', 'Custom Duration']
-    }
-  ];
+  // State for packages from database
+  const [packages, setPackages] = useState([]);
+  const [loadingPackages, setLoadingPackages] = useState(true);
+
+  // Fetch packages from database
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        setLoadingPackages(true);
+        const response = await fetch('http://localhost:5000/api/packages/active-packages');
+        const data = await response.json();
+        
+        console.log('Fetched packages:', data); // Debug log
+        
+        // The API returns an array directly when successful
+        let packagesData = Array.isArray(data) ? data : (data.data || []);
+        
+        if (packagesData.length > 0) {
+          // Transform database packages to match UI format
+          const transformedPackages = packagesData.map(pkg => ({
+            id: pkg.id,
+            name: pkg.package_name,
+            tier: pkg.category || 'silver',
+            duration: `${pkg.duration_days} Days / ${pkg.duration_nights} Nights`,
+            priceRange: `$${pkg.min_price} - $${pkg.max_price}`,
+            price: `$${pkg.min_price}`,
+            image: pkg.featured_image || 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            rating: 4.8,
+            reviews: Math.floor(Math.random() * 300) + 100,
+            featured: pkg.category === 'gold',
+            tagline: pkg.category === 'gold' ? 'Premium Experience' : 
+                     pkg.category === 'silver' ? 'Comfort Experience' : 
+                     pkg.category === 'platinum' ? 'Essential Experience' : 'Custom Experience',
+            gradient: pkg.category === 'gold' ? 'from-yellow-400 via-yellow-500 to-orange-500' :
+                     pkg.category === 'silver' ? 'from-gray-300 via-gray-400 to-gray-500' :
+                     pkg.category === 'platinum' ? 'from-orange-600 via-orange-700 to-orange-800' :
+                     'from-purple-500 via-pink-500 to-red-500',
+            highlights: pkg.inclusions ? pkg.inclusions.split('\n').filter(h => h.trim()).map(h => h.replace('•', '').trim()) : [],
+            includes: [`${pkg.hotel_stars}-Star Hotels`, `${pkg.duration_days} Days`, `${pkg.min_travelers}-${pkg.max_travelers} Travelers`]
+          }));
+          
+          console.log('Transformed packages:', transformedPackages); // Debug log
+          setPackages(transformedPackages);
+        }
+        setLoadingPackages(false);
+      } catch (error) {
+        console.error('Error fetching packages:', error);
+        setLoadingPackages(false);
+      }
+    };
+
+    fetchPackages();
+  }, []);
 
   // Fetch real YouTube videos about Sri Lanka
   useEffect(() => {
@@ -248,6 +206,17 @@ function Home() {
 
     fetchYouTubeVideos();
   }, []);
+
+  // Handle Book Now click
+  const handleBookNow = (packageId) => {
+    if (user) {
+      // If user is logged in, go to booking form
+      navigate('/tourist/bookingForm', { state: { packageId } });
+    } else {
+      // If not logged in, redirect to login page
+      navigate('/login');
+    }
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -436,7 +405,28 @@ function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {packages.map((pkg, index) => (
+            {loadingPackages ? (
+              // Loading skeleton
+              [1, 2, 3, 4].map((i) => (
+                <div key={i} className="overflow-hidden bg-gray-800 rounded-3xl animate-pulse">
+                  <div className="h-56 bg-gray-700"></div>
+                  <div className="p-6 space-y-3">
+                    <div className="h-4 bg-gray-700 rounded"></div>
+                    <div className="w-3/4 h-4 bg-gray-700 rounded"></div>
+                    <div className="w-1/2 h-4 bg-gray-700 rounded"></div>
+                  </div>
+                </div>
+              ))
+            ) : packages.length === 0 ? (
+              // No packages message
+              <div className="col-span-full py-20 text-center">
+                <i className="mb-4 text-6xl text-gray-600 fas fa-box-open"></i>
+                <p className="text-xl text-gray-400">No packages available at the moment.</p>
+                <p className="mt-2 text-gray-500">Check back soon for amazing travel packages!</p>
+              </div>
+            ) : (
+              // Display packages
+              packages.map((pkg, index) => (
               <div
                 key={index}
                 className="overflow-hidden relative bg-gray-800 rounded-3xl transition-all duration-300 group hover:transform hover:scale-105 hover:shadow-2xl"
@@ -517,11 +507,17 @@ function Home() {
                     </div>
                     
                     <div className="space-y-2">
-                      <button className="flex justify-center items-center px-6 py-3 w-full font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-lg transition hover:from-orange-600 hover:to-orange-700">
+                      <button 
+                        onClick={() => handleBookNow(pkg.id)}
+                        className="flex justify-center items-center px-6 py-3 w-full font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-lg transition hover:from-orange-600 hover:to-orange-700"
+                      >
                         Book Now <i className="ml-2 fas fa-arrow-right"></i>
                       </button>
                       {pkg.tier !== 'custom' && (
-                        <button className="flex justify-center items-center px-6 py-2 w-full text-sm font-medium text-orange-400 bg-transparent rounded-xl border border-orange-400 transition hover:bg-orange-400/10">
+                        <button 
+                          onClick={() => handleBookNow(pkg.id)}
+                          className="flex justify-center items-center px-6 py-2 w-full text-sm font-medium text-orange-400 bg-transparent rounded-xl border border-orange-400 transition hover:bg-orange-400/10"
+                        >
                           <i className="mr-2 fas fa-cog"></i> Customize
                         </button>
                       )}
@@ -529,7 +525,7 @@ function Home() {
                   </div>
                 </div>
               </div>
-            ))}
+            )))}
           </div>
 
           {/* Package Comparison Section */}
