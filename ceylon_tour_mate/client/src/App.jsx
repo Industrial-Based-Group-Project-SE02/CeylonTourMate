@@ -32,14 +32,17 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 import BookingApprovals from "./pages/manager/BookingApprovals";
-import ManagePackage from './pages/manager/managePackage';
+import ManagePackage from "./pages/manager/ManagePackage";
 import DriverTourTasks from "./pages/manager/DriverTourTasks";
+import HotelAvailabilityCheck from './pages/manager/HotelAvailabilityCheck';
 
 import CreatePackage from './pages/manager/CreatePackage';
 
 import MyTour from './pages/driver/my_tour';
 import ViewSchedule from "./pages/driver/view_shedule";
 import DriverDetails from "./pages/driver/driverDetails";
+import HotelBookings from './pages/hotelAgent/HotelBookings';
+import RoomManagement from './pages/hotelAgent/RoomManagement';
 
 function App() {
   // Helper to wrap pages with Sidebar layout
@@ -288,26 +291,7 @@ function App() {
                 <div className="flex min-h-screen bg-gray-50">
                   <Sidebar />
                   <div className="flex-1 md:ml-64">
-                    <div className="p-8">
-                      <h1 className="text-3xl font-bold">Hotel Bookings</h1>
-                      <p className="mt-2 text-gray-600">Manage hotel bookings (Coming Soon)</p>
-                    </div>
-                  </div>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/reservations"
-            element={
-              <ProtectedRoute allowedRoles={['hotel_agent']}>
-                <div className="flex min-h-screen bg-gray-50">
-                  <Sidebar />
-                  <div className="flex-1 md:ml-64">
-                    <div className="p-8">
-                      <h1 className="text-3xl font-bold">Reservations</h1>
-                      <p className="mt-2 text-gray-600">Manage reservations (Coming Soon)</p>
-                    </div>
+                    <HotelBookings />
                   </div>
                 </div>
               </ProtectedRoute>
@@ -320,10 +304,21 @@ function App() {
                 <div className="flex min-h-screen bg-gray-50">
                   <Sidebar />
                   <div className="flex-1 md:ml-64">
-                    <div className="p-8">
-                      <h1 className="text-3xl font-bold">Room Management</h1>
-                      <p className="mt-2 text-gray-600">Manage rooms (Coming Soon)</p>
-                    </div>
+                    <RoomManagement />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manager/hotel-availability"
+            element={
+              <ProtectedRoute allowedRoles={['manager']}>
+                <div className="flex min-h-screen bg-gray-50">
+                  <Sidebar />
+                  <div className="flex-1 md:ml-64">
+                    <HotelAvailabilityCheck />
                   </div>
                 </div>
               </ProtectedRoute>
