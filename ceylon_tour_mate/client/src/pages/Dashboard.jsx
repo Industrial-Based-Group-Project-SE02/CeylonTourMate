@@ -182,6 +182,33 @@ function Dashboard() {
     </div>
   );
 
+  const renderHotelAgentDashboard = () => (
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold text-gray-800">Hotel Agent Dashboard</h1>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-black">Active Listings</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">0</h3>
+            </div>
+            <i className="text-4xl text-black fas fa-hotel"></i>
+          </div>
+        </div>
+
+        <div className="p-6 bg-gradient-to-br rounded-xl shadow-lg">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-black">New Requests</p>
+              <h3 className="mt-2 text-3xl font-bold text-black">0</h3>
+            </div>
+            <i className="text-4xl text-black fas fa-bell"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
  
   const renderDashboard = () => {
     switch (user?.role) {

@@ -204,6 +204,7 @@ function Sidebar() {
       { name: 'Drivers', path: '/drivers', icon: 'fas fa-id-card' },
       { name: 'Hotel Agents', path: '/hotel-agents', icon: 'fas fa-hotel' },
       { name: 'Booking Approvals', path: '/manager/BookingApprovals', icon: 'fas fa-check-circle' },
+      { name: 'Hotel Availability', path: '/manager/hotel-availability', icon: 'fas fa-bed' },
       { name: 'Feedbacks', path: '/feedbacks', icon: 'fas fa-comments' },
       { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
 
@@ -231,19 +232,19 @@ driver: [
       { name: 'Driver Details', path: '/driver/details', icon: 'fas fa-id-card' },
 
     ],
-    hotel_agent: [
-      { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
-      { name: 'Bookings', path: '/hotel-bookings', icon: 'fas fa-bed' },
-      { name: 'Properties', path: '/properties', icon: 'fas fa-building' },
-      { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
-    ],
     // hotel_agent: [
     //   { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
-    //   { name: 'Hotel Bookings', path: '/hotel-bookings', icon: 'fas fa-bed' },
-    //   { name: 'Reservations', path: '/reservations', icon: 'fas fa-clipboard-list' },
+    //   { name: 'Bookings', path: '/hotel-bookings', icon: 'fas fa-bed' },
     //   { name: 'Room Management', path: '/rooms', icon: 'fas fa-door-open' },
     //   { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
     // ],
+    hotel_agent: [
+      { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
+      { name: 'Hotel Bookings', path: '/hotel-bookings', icon: 'fas fa-bed' },
+      { name: 'Reservations', path: '/reservations', icon: 'fas fa-clipboard-list' },
+      { name: 'Room Management', path: '/rooms', icon: 'fas fa-door-open' },
+      { name: 'Profile', path: '/profile', icon: 'fas fa-user' },
+    ],
   };
 
   const currentNav = navigation[user?.role] || [];
