@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 const path = require('path');      
 const fs = require('fs'); 
+const crypto = require('crypto');
+const { sendPasswordResetEmail } = require('../services/emailService');
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -306,5 +308,175 @@ exports.changePassword = async (req, res) => {
   } catch (error) {
     console.error('Change password error:', error);
     res.status(500).json({ error: 'Failed to change password' });
+  }
+};
+
+
+////////////////////////////////
+
+
+// Request password reset
+exports.requestPasswordReset = async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    // Find user
+    const userResult = await client.query(
+      'SELECT id, email, first_name, is_active FROM users WHERE email = $1',
+      [email.toLowerCase()]
+    );
+
+    // Always return success to prevent email enumeration
+    if (userResult.rows.length === 0) {
+      return res.json({ 
+        message: 'If an account exists with this email, a password reset link has been sent.' 
+      });
+    }
+
+    const user = userResult.rows[0];
+
+    // Check if account is active
+    if (!user.is_active) {
+      return res.json({ 
+        message: 'If an account exists with this email, a password reset link has been sent.' 
+      });
+    }
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    const expiresAt = new Date(Date.now() + 3600000); // 1 hour
+
+    // Invalidate old tokens
+    await client.query(
+      'UPDATE password_reset_tokens SET is_used = TRUE WHERE user_id = $1 AND is_used = FALSE',
+      [user.id]
+    );
+
+    // Store new token
+    await client.query(
+      `INSERT INTO password_reset_tokens (user_id, token, expires_at)
+       VALUES ($1, $2, $3)`,
+      [user.id, hashedToken, expiresAt]
+    );
+
+    // Send email
+    await sendPasswordResetEmail(user.email, resetToken, user.first_name);
+
+    res.json({ 
+      message: 'If an account exists with this email, a password reset link has been sent.' 
+    });
+  } catch (error) {
+    console.error('Request password reset error:', error);
+    res.status(500).json({ error: 'Failed to process password reset request' });
+  } finally {
+    client.release();
+  }
+};
+
+// Verify reset token
+exports.verifyResetToken = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ error: 'Token is required' });
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const result = await pool.query(
+      `SELECT prt.id, prt.user_id, prt.expires_at, u.email, u.first_name
+       FROM password_reset_tokens prt
+       JOIN users u ON prt.user_id = u.id
+       WHERE prt.token = $1 AND prt.is_used = FALSE`,
+      [hashedToken]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(400).json({ error: 'Invalid or expired reset token' });
+    }
+
+    const tokenData = result.rows[0];
+
+    // Check if expired
+    if (new Date(tokenData.expires_at) < new Date()) {
+      return res.status(400).json({ error: 'Reset token has expired' });
+    }
+
+    res.json({ 
+      valid: true,
+      email: tokenData.email,
+      firstName: tokenData.first_name
+    });
+  } catch (error) {
+    console.error('Verify reset token error:', error);
+    res.status(500).json({ error: 'Failed to verify token' });
+  }
+};
+
+// Reset password
+exports.resetPassword = async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res.status(400).json({ error: 'Token and new password are required' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    // Get token data
+    const tokenResult = await client.query(
+      `SELECT id, user_id, expires_at
+       FROM password_reset_tokens
+       WHERE token = $1 AND is_used = FALSE`,
+      [hashedToken]
+    );
+
+    if (tokenResult.rows.length === 0) {
+      return res.status(400).json({ error: 'Invalid or expired reset token' });
+    }
+
+    const tokenData = tokenResult.rows[0];
+
+    // Check if expired
+    if (new Date(tokenData.expires_at) < new Date()) {
+      return res.status(400).json({ error: 'Reset token has expired' });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password
+    await client.query(
+      'UPDATE users SET password = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
+      [hashedPassword, tokenData.user_id]
+    );
+
+    // Mark token as used
+    await client.query(
+      'UPDATE password_reset_tokens SET is_used = TRUE WHERE id = $1',
+      [tokenData.id]
+    );
+
+    res.json({ message: 'Password reset successfully' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ error: 'Failed to reset password' });
+  } finally {
+    client.release();
   }
 };
