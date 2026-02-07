@@ -67,17 +67,25 @@ app.get('/', (req, res) => {
 // API routes
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
-const driverRoutes = require('./routes/driverRoutes');
+const hotelAgentRoutes = require('./routes/hotelAgentRoutes');
+// const driverRoutes = require('./routes/driverRoutes');
 const advertisementRoutes = require('./routes/advertisementRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 const packageRoutes = require('./routes/packageRoutes'); 
+const bookingRoutes = require('./routes/bookingRoutes');
+const hotelRoomRoutes = require('./routes/hotelRoomRoutes');
+const bookingHotelRoutes = require('./routes/bookingHotelRoutes');
 
 app.use('/api/packages', packageRoutes); 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/drivers', driverRoutes);
+app.use('/api/hotel-agents', hotelAgentRoutes);
+// app.use('/api/drivers', driverRoutes);
 app.use('/api/advertisements', advertisementRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/hotel-rooms', hotelRoomRoutes);
+app.use('/api/booking-hotels', bookingHotelRoutes);
 
 
 
