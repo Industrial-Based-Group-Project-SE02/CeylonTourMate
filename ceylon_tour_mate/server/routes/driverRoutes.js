@@ -1,17 +1,16 @@
+
 const express = require('express');
 const router = express.Router();
 const driverController = require('../controllers/driverController');
 const { authenticateToken, authorizeRoles } = require('../middleware/auth');
 
-// All routes require authentication and manager/admin role
+// Public read routes (no authentication required)
+router.get('/', driverController.getAllDrivers);
+router.get('/:userId', driverController.getDriverById);
+
+// Protected routes require authentication and manager/admin role
 router.use(authenticateToken);
 router.use(authorizeRoles('admin', 'manager'));
-
-// Get all drivers with details
-router.get('/', driverController.getAllDrivers);
-
-// Get single driver by userId
-router.get('/:userId', driverController.getDriverById);
 
 // Create driver details (after user account created)
 router.post('/:userId/details', driverController.createDriverDetails);

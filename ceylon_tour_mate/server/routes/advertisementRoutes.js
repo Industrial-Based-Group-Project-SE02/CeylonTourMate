@@ -49,16 +49,15 @@ const uploadAd = multer({
 });
 
 // Public routes (no authentication required)
+router.get('/', advertisementController.getAllAdvertisements);
 router.get('/active', advertisementController.getActiveAdvertisements);
+router.get('/:id', advertisementController.getAdvertisementById);
 router.post('/:id/view', advertisementController.incrementViewCount);
 router.post('/:id/click', advertisementController.incrementClickCount);
 
 // Protected routes (admin only)
 router.use(authenticateToken);
 router.use(authorizeRoles('admin'));
-
-router.get('/', advertisementController.getAllAdvertisements);
-router.get('/:id', advertisementController.getAdvertisementById);
 router.post('/', uploadAd.single('image'), advertisementController.createAdvertisement);
 router.put('/:id', uploadAd.single('image'), advertisementController.updateAdvertisement);
 router.delete('/:id', advertisementController.deleteAdvertisement);
