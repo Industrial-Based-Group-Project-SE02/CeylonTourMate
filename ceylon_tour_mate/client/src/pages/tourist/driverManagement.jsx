@@ -1023,7 +1023,7 @@ const DriverManagement = () => {
       </div>
 
       {/* Add CSS for animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes slide-in {
           from {
             transform: translateX(100%);
