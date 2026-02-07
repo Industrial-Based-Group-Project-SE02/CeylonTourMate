@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -289,7 +290,7 @@ function Drivers() {
           </div>
           <button
             onClick={() => setShowUserModal(true)}
-            className="flex gap-2 items-center px-6 py-3 font-semibold text-white bg-blue-600 rounded-lg shadow-lg transition hover:bg-blue-700"
+            className="flex gap-2 items-center px-6 py-3 font-semibold text-white bg-orange-600 rounded-lg shadow-lg transition hover:bg-orange-900"
           >
             <i className="fas fa-user-plus"></i>
             Create Driver Account
@@ -307,7 +308,7 @@ function Drivers() {
           {drivers.map((driver) => (
             <div key={driver.userId} className="overflow-hidden bg-white rounded-xl shadow-lg transition hover:shadow-xl">
               {/* Card Header */}
-              <div className="p-6 bg-gradient-to-r from-blue-500 to-purple-500">
+              <div className="p-2 bg-gradient-to-r from-orange-600 to-orange-900">
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4 items-center">
                     {driver.profilePicture ? (
@@ -438,7 +439,7 @@ function Drivers() {
             <p className="mb-6 text-gray-600">Start by creating a driver account</p>
             <button
               onClick={() => setShowUserModal(true)}
-              className="px-6 py-3 font-semibold text-white bg-blue-600 rounded-lg transition hover:bg-blue-700"
+              className="px-6 py-3 font-semibold text-white bg-orange-700 rounded-lg transition hover:bg-orange-900"
             >
               <i className="mr-2 fas fa-plus"></i>
               Create First Driver
@@ -451,7 +452,7 @@ function Drivers() {
       {showUserModal && (
         <div className="flex fixed inset-0 z-50 justify-center items-center p-4 bg-black bg-opacity-50">
           <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 z-10 px-8 py-6 bg-gradient-to-r from-blue-600 to-purple-600">
+            <div className="sticky top-0 z-10 px-8 py-6 bg-gradient-to-r from-orange-700 to-orange-800">
               <h2 className="text-2xl font-bold text-white">Create Driver Account (Step 1/2)</h2>
               <p className="text-blue-100">Create user account first, then add driver details</p>
             </div>
@@ -522,7 +523,7 @@ function Drivers() {
               <div className="flex gap-3 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 px-6 py-3 font-semibold text-white bg-blue-600 rounded-lg transition hover:bg-blue-700"
+                  className="flex-1 px-6 py-3 font-semibold text-white bg-orange-700 rounded-lg transition hover:bg-orange-900"
                 >
                   <i className="mr-2 fas fa-user-plus"></i>
                   Create Account
@@ -547,7 +548,7 @@ function Drivers() {
       {showDetailsModal && selectedDriver && (
         <div className="flex fixed inset-0 z-50 justify-center items-center p-4 bg-black bg-opacity-50">
           <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 z-10 px-8 py-6 bg-gradient-to-r from-blue-600 to-purple-600">
+            <div className="sticky top-0 z-10 px-8 py-6 bg-gradient-to-r from-orange-700 to-orange-800">
               <h2 className="text-2xl font-bold text-white">
                 {selectedDriver.driverDetails ? 'Edit Driver Details' : 'Add Driver Details (Step 2/2)'}
               </h2>
@@ -820,7 +821,7 @@ function Drivers() {
               <div className="flex gap-3 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 px-6 py-3 font-semibold text-white bg-blue-600 rounded-lg transition hover:bg-blue-700"
+                  className="flex-1 px-6 py-3 font-semibold text-white bg-orange-700 rounded-lg transition hover:bg-orange-900"
                 >
                   <i className="mr-2 fas fa-save"></i>
                   {selectedDriver.driverDetails ? 'Update Details' : 'Save Details'}
@@ -846,7 +847,7 @@ function Drivers() {
         <div className="flex fixed inset-0 z-50 justify-center items-center p-4 bg-black bg-opacity-50">
           <div className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="px-8 py-6 bg-gradient-to-r from-blue-600 to-purple-600">
+            <div className="px-6 py-2 bg-gradient-to-r from-orange-700 to-orange-800">
               <div className="flex gap-6 items-center">
                 {selectedDriver.profilePicture ? (
                   <img

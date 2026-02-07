@@ -1,23 +1,3 @@
-// const express = require('express');
-// const router = express.Router();
-// const {
-//   getAllUsers,
-//   getUserById,
-//   createUser,
-//   updateUser,
-//   deleteUser,
-// } = require('../controllers/userController');
-
-// // Routes
-// router.get('/', getAllUsers);
-// router.get('/:id', getUserById);
-// router.post('/', createUser);
-// router.put('/:id', updateUser);
-// router.delete('/:id', deleteUser);
-
-// module.exports = router;
-
-
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
@@ -33,5 +13,7 @@ router.post('/', authorizeRoles('admin', 'manager'), userController.createUser);
 router.put('/:id', authorizeRoles('admin', 'manager'), userController.updateUser);
 router.delete('/:id', authorizeRoles('admin', 'manager'), userController.deleteUser);
 router.patch('/:id/toggle-status', authorizeRoles('admin', 'manager'), userController.toggleUserStatus);
+router.post('/profile-picture', userController.uploadProfilePicture);
+router.delete('/profile-picture', userController.deleteProfilePicture);
 
 module.exports = router;

@@ -89,11 +89,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateUser = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-  };
-
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -109,7 +104,6 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!token && !!user,
     login,
     register,
-    updateUser,
     logout
   };
 
