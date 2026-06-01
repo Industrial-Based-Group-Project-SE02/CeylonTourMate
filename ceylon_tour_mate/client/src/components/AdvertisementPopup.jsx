@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL, { getImageUrl } from '../config/api';
 
 function AdvertisementPopup() {
   const [advertisement, setAdvertisement] = useState(null);
@@ -44,7 +45,7 @@ function AdvertisementPopup() {
 
   const fetchActiveAdvertisements = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/advertisements/active');
+      const response = await axios.get(`${API_BASE_URL}/api/advertisements/active`);
       if (response.data && response.data.length > 0) {
         setAllAds(response.data);
         setAdvertisement(response.data[0]);
@@ -56,7 +57,7 @@ function AdvertisementPopup() {
 
   const trackView = async (id) => {
     try {
-      await axios.post(`http://localhost:5000/api/advertisements/${id}/view`);
+      await axios.post(`${API_BASE_URL}/api/advertisements/${id}/view`);
     } catch (error) {
       console.error('Error tracking view:', error);
     }
@@ -64,7 +65,7 @@ function AdvertisementPopup() {
 
   const trackClick = async (id) => {
     try {
-      await axios.post(`http://localhost:5000/api/advertisements/${id}/click`);
+      await axios.post(`${API_BASE_URL}/api/advertisements/${id}/click`);
     } catch (error) {
       console.error('Error tracking click:', error);
     }
@@ -122,7 +123,7 @@ function AdvertisementPopup() {
             {advertisement.imageUrl && (
               <div className="relative h-64 md:w-1/2 md:h-auto">
                 <img
-                  src={`http://localhost:5000${advertisement.imageUrl}`}
+                  src={getImageUrl(advertisement.imageUrl)}
                   alt={advertisement.title}
                   className="object-cover w-full h-full"
                 />
@@ -218,7 +219,7 @@ function AdvertisementPopup() {
         </div>
       </div>
 
-      <style>{`
+      <style jsx>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -252,6 +253,5 @@ function AdvertisementPopup() {
 }
 
 export default AdvertisementPopup;
-
 
 

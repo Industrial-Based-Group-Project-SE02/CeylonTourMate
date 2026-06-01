@@ -96,6 +96,12 @@ function Home() {
         
         if (packagesData.length > 0) {
           // Transform database packages to match UI format
+          const packageImages = {
+            'gold': '/gold-image.jpg',
+            'silver': '/silver-image.jpg',
+            'platinum': '/platinum-image.jpg'
+          };
+
           const transformedPackages = packagesData.map(pkg => ({
             id: pkg.id,
             name: pkg.package_name,
@@ -103,7 +109,7 @@ function Home() {
             duration: `${pkg.duration_days} Days / ${pkg.duration_nights} Nights`,
             priceRange: `$${pkg.min_price} - $${pkg.max_price}`,
             price: `$${pkg.min_price}`,
-            image: pkg.featured_image || 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            image: pkg.featured_image || packageImages[pkg.category || 'silver'] || 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
             rating: 4.8,
             reviews: Math.floor(Math.random() * 300) + 100,
             featured: pkg.category === 'gold',
@@ -294,7 +300,6 @@ function Home() {
               <div
                 key={index}
                 className="relative h-[500px] rounded-3xl overflow-hidden cursor-pointer group"
-                onClick={() => alert(`Selected: ${dest.title}`)}
               >
                 <img src={dest.image} alt={dest.title} className="object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90"></div>
@@ -309,7 +314,10 @@ function Home() {
                   <h3 className="mb-2 text-3xl font-bold">{dest.title}</h3>
                   <p className="mb-4 text-gray-200">{dest.description}</p>
                   <div className="flex justify-between items-center">
-                    <button className="px-6 py-3 font-bold text-gray-900 bg-white rounded-full transition hover:bg-gray-100">
+                    <button 
+                      onClick={() => navigate('/login')}
+                      className="px-6 py-3 font-bold text-gray-900 bg-white rounded-full transition hover:bg-gray-100"
+                    >
                       Explore <i className="ml-2 fas fa-arrow-right"></i>
                     </button>
                   </div>
@@ -404,10 +412,10 @@ function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {loadingPackages ? (
               // Loading skeleton
-              [1, 2, 3, 4].map((i) => (
+              [1, 2, 3].map((i) => (
                 <div key={i} className="overflow-hidden bg-gray-800 rounded-3xl animate-pulse">
                   <div className="h-56 bg-gray-700"></div>
                   <div className="p-6 space-y-3">

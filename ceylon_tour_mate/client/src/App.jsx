@@ -16,6 +16,9 @@ import Advertisements from './pages/Advertisements';
 import Drivers from './pages/Drivers';
 import HotelAgents from './pages/HotelAgents';
 import AdminHotelAgents from './pages/AdminHotelAgents';
+import AdminPackages from './pages/AdminPackages';
+import AdminBookings from './pages/AdminBookings';
+import Reports from './pages/Reports';
 import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -26,23 +29,24 @@ import CustomerFeedback from './pages/tourist/cutomerFeedback';
 import AdminDrivers from './pages/AdminDrivers';
 import Feedbacks from './pages/Feedbacks';
 import TourPackageDetails from './pages/tourist/TourPackageDetails';
-import PackageDetails from './pages/tourist/PackageDetails';
+// import PackageDetails from './pages/tourist/PackageDetails'; // ❌ File deleted - commented out
 import TripHistory from './pages/tourist/trip_history';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 import BookingApprovals from "./pages/manager/BookingApprovals";
-import ManagePackage from "./pages/manager/ManagePackage";
+import ManagePackage from './pages/manager/managePackage';
 import DriverTourTasks from "./pages/manager/DriverTourTasks";
-import HotelAvailabilityCheck from './pages/manager/HotelAvailabilityCheck';
+import ViewPackage from './pages/manager/ViewPackage';                             
+import RoomsManagement from './pages/hotel_agent/rooms';
+import HotelDetails from './pages/hotel_agent/HotelDetails';
+import ManagerReports from './pages/manager/ManagerReports';
 
 import CreatePackage from './pages/manager/CreatePackage';
 
 import MyTour from './pages/driver/my_tour';
 import ViewSchedule from "./pages/driver/view_shedule";
 import DriverDetails from "./pages/driver/driverDetails";
-import HotelBookings from './pages/hotelAgent/HotelBookings';
-import RoomManagement from './pages/hotelAgent/RoomManagement';
 
 function App() {
   // Helper to wrap pages with Sidebar layout
@@ -137,11 +141,50 @@ function App() {
               </ProtectedRoute>
             } 
           />
+          <Route 
+            path="/admin-packages" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminPackages />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin-bookings" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminBookings />
+              </ProtectedRoute>
+            } 
+          />
           <Route
             path="/advertisements"
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <Advertisements />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Manager-only Reports page */}
+          <Route
+            path="/manager/reports"
+            element={
+              <ProtectedRoute allowedRoles={['manager']}>
+                <div className="flex min-h-screen bg-gray-50">
+                  <Sidebar />
+                  <div className="flex-1 md:ml-64">
+                    <ManagerReports />
+                  </div>
+                </div>
               </ProtectedRoute>
             }
           />
@@ -185,6 +228,34 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route 
+          path="/manager/BookingApprovals"
+            element={
+              <ProtectedRoute role="manager">
+                    <Sidebar />
+                     <div className="flex-1 md:ml-64">
+                <BookingApprovals /></div>
+              </ProtectedRoute>
+            } 
+            />
+           <Route path="/package/:id" element={<BookingApprovals />} />                                     <Route
+          path="/rooms"
+          element={
+            <ProtectedRoute allowedRoles={['hotel_agent']}>
+              <div className="flex min-h-screen bg-gray-50">
+                <Sidebar />
+                <div className="flex-1 md:ml-64">
+                  <div className="p-8">
+                    <h1 className="text-3xl font-bold">Room Management</h1>
+                    <p className="mt-2 text-gray-600">Room Availability</p>
+                  </div>
+                  {/* This is crucial - render the component */}
+                  <RoomsManagement />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
 
            <Route
           path="/manager/driver-tasks"
@@ -200,20 +271,28 @@ function App() {
           }
         />
 
-        <Route 
+        {/* <Route 
           path="/ManagePackage"
             element={
               <ProtectedRoute role="manager">
                 <ManagePackage />
               </ProtectedRoute>
             } 
-            />
-           <Route path="/package/:id" element={<PackageDetails />} />
+            /> */}
 
   <Route path="/manager/packages/create" element={<CreatePackage />} />
         <Route path="/manager/packages/edit/:id" element={<CreatePackage />} /> {/* For editing */}
+        <Route
+          path="/manager/package/:id"
+          element={
+            <ProtectedRoute allowedRoles={['manager']}>
+              <ViewPackage />
+            </ProtectedRoute>
+          }
+        />
       
-
+        {/* Tourist Package View Route */}
+        {/* <Route path="/package/:id" element={<PackageDetails />} /> */} {/* ❌ PackageDetails file deleted - commented out */}
 
           <Route 
           path="/manager/BookingApprovals"
@@ -224,7 +303,6 @@ function App() {
               </ProtectedRoute>
             } 
             />
-           <Route path="/package/:id" element={<BookingApprovals />} />
 
           {/* Tourist Routes */}
           <Route
@@ -291,7 +369,26 @@ function App() {
                 <div className="flex min-h-screen bg-gray-50">
                   <Sidebar />
                   <div className="flex-1 md:ml-64">
-                    <HotelBookings />
+                    <div className="p-8">
+                      <h1 className="text-3xl font-bold">Hotel Bookings</h1>
+                      <p className="mt-2 text-gray-600">Manage hotel bookings (Coming Soon)</p>
+                    </div>
+                  </div>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reservations"
+            element={
+              <ProtectedRoute allowedRoles={['hotel_agent']}>
+                <div className="flex min-h-screen bg-gray-50">
+                  <Sidebar />
+                  <div className="flex-1 md:ml-64">
+                    <div className="p-8">
+                      <h1 className="text-3xl font-bold">Reservations</h1>
+                      <p className="mt-2 text-gray-600">Manage reservations (Coming Soon)</p>
+                    </div>
                   </div>
                 </div>
               </ProtectedRoute>
@@ -304,7 +401,10 @@ function App() {
                 <div className="flex min-h-screen bg-gray-50">
                   <Sidebar />
                   <div className="flex-1 md:ml-64">
-                    <RoomManagement />
+                    <div className="p-8">
+                      <h1 className="text-3xl font-bold">Room Management</h1>
+                      <p className="mt-2 text-gray-600">Manage rooms (Coming Soon)</p>
+                    </div>
                   </div>
                 </div>
               </ProtectedRoute>
@@ -312,13 +412,13 @@ function App() {
           />
 
           <Route
-            path="/manager/hotel-availability"
+            path="/hotel_details"
             element={
-              <ProtectedRoute allowedRoles={['manager']}>
+              <ProtectedRoute allowedRoles={['hotel_agent']}>
                 <div className="flex min-h-screen bg-gray-50">
                   <Sidebar />
                   <div className="flex-1 md:ml-64">
-                    <HotelAvailabilityCheck />
+                    <HotelDetails />
                   </div>
                 </div>
               </ProtectedRoute>
