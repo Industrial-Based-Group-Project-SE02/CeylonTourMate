@@ -13,6 +13,18 @@ const BookingApprovals = () => {
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showPaymentSlip, setShowPaymentSlip] = useState(false);
 
+
+  // const [bookings, setBookings] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [filter, setFilter] = useState('pending');
+  // const [selectedBooking, setSelectedBooking] = useState(null);
+  // const [approvalReason, setApprovalReason] = useState('');
+  // const [rejectionReason, setRejectionReason] = useState('');
+  // const [showRejectModal, setShowRejectModal] = useState(false);
+  // const [showPaymentSlip, setShowPaymentSlip] = useState(false);
+
+
   // Styles
   const styles = {
     container: {
