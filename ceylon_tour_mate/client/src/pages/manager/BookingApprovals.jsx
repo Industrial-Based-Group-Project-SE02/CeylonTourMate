@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-
 import DashboardLayout from '../../components/DashboardLayout';
 const BookingApprovals = () => {
   const [bookings, setBookings] = useState([]);
