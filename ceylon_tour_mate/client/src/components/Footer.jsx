@@ -126,7 +126,7 @@ function Footer() {
                 <span>+1 (555) 123-4567</span>
               </li>
               <li className="flex gap-2 items-center">
-                <i className="fas fa-envelope"></i>
+                <i className="fas fa-envelope"></i>      
                 <span>info@ceylontourmate.com</span>
               </li>
               <li className="flex gap-2 items-center">
